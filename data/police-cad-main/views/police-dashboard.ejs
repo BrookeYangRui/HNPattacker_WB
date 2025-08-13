@@ -1,0 +1,2665 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <% include ad-header %>
+  <title>LPC - Police Dashboard</title>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="Lines Roleplay Police CAD. Built to facilitate the needs of roleplay police and civilians." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="generator" content="Codeply">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap.min.css" />
+  <link rel="stylesheet" href="/static/css/animate.min.css" />
+  <link rel="stylesheet" href="/static/css/ionicons.min.css" />
+  <link rel="stylesheet" href="/static/css/tail.select-dark.min.css" />
+  <link rel="stylesheet" href="/static/css/awesomplete.css" />
+  <link rel="stylesheet" href="static/css/style.css">
+  <link rel="stylesheet" href="/static/css/styles.css" />
+  <!-- Department Background System -->
+  <link rel="stylesheet" href="/static/css/department-backgrounds.css">
+  <script type="module" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.esm.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+  <script nomodule="" src="https://unpkg.com/ionicons@5.1.2/dist/ionicons/ionicons.js"></script>
+  <link rel="shortcut icon" type="image/ico" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Signika:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://code.iconify.design/1/1.0.3/iconify.min.js"></script>
+  <script type="text/javascript" src="static/js/tail.select.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.21/lodash.min.js"></script>
+  <script src="/static/js/jquery.min.js"></script>
+  <script src="/static/js/jquery.easing.min.js"></script>
+  <script src="/static/js/wow.js"></script>
+  <script src="/static/js/popper.js"></script>
+  <script src="/static/js/main.js"></script>
+  <script src="/static/js/notepad.js"></script>
+  <script src="/static/js/police-dashboard.js"></script>
+  <script src="/static/js/department-backgrounds.js"></script>
+  <script src="/static/js/name-database.js"></script>
+  <script src="/static/js/plate-database.js"></script>
+  <script src="/static/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js"></script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <!-- To hide google translate header bar on each page -->
+  <style type='text/css'> iframe.goog-te-banner-frame{ display: none !important;}</style>
+  <style type='text/css'> body {position: static !important; top:0px !important;}</style>
+  <style>
+  #tenCodesTable tbody tr {
+    cursor: pointer;
+  }
+  #tenCodesTable tbody tr:hover {
+    background-color: #3b82f6;
+  }
+  #callDepartmentsDetail .badge,
+  #callAssignedToDetail .badge {
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+  #callNotesDetail .note-item {
+    border-bottom: 1px solid #ddd;
+    padding: 10px 0;
+  }
+  #callNotesDetail .note-item:last-child {
+    border-bottom: none;
+  }
+  .rotate {
+    transition: transform 0.3s ease;
+  }
+  .rotate.expanded {
+    transform: rotate(90deg);
+  }
+  
+  .select2-container--open {
+    z-index: 9999 !important; /* Ensure dropdown is above modal (z-index 9000) */
+  }
+  .select2-dropdown {
+    z-index: 9999 !important;
+  }
+  .select2 {
+    color: black;
+  }
+  .select2-results__group {
+    color: blue;
+  }
+  .select2-results__options {
+    color: black;
+  }
+  /* notification styles */
+  .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -7px;
+    background-color: #dc3545;
+    color: white;
+    border-radius: 50%;
+    width: 14px;
+    height: 14px;
+    font-size: 10px;
+    line-height: 14px;
+    text-align: center;
+    display: none;
+}
+    .notification-badge.show {
+      display: block;
+    }
+  .btn>.btn-success>.btn-sm {
+    
+    padding: 5px 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    border-radius: 3px;
+
+  }
+  #toast-container {
+    position: fixed;
+    top: 60px; /* Adjusted from 20px to avoid navbar overlap */
+    right: 20px;
+    z-index: 1070;
+  }
+  .custom-toast {
+    position: relative;
+    min-width: 250px;
+    max-width: 350px;
+    background: #2d3748;
+    color: #e2e8f0;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    display: none; /* Initially hidden for fadeIn */
+  }
+  .custom-toast-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: #1f2937;
+    border-bottom: 1px solid #4b5563;
+  }
+  .custom-toast-header strong {
+    flex: 1;
+    font-size: 14px;
+  }
+  .custom-toast-header small {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-right: 10px;
+  }
+  .custom-toast-header .close {
+    color: #e2e8f0;
+    font-size: 14px;
+    padding: 0 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+  .custom-toast-body {
+    padding: 10px;
+    font-size: 14px;
+  }
+  /* end of notification styles */
+</style>
+</head>
+
+<body>
+
+  <div class="wrapper d-flex align-items-stretch">
+    <nav id="sidebar" style="z-index: 9;">
+      <div class="img bg-wrap text-center py-4" style="background-image: url(/static/images/police-corner-bg.jpg);">
+        <div class="user-logo">
+          <a data-toggle="modal" href="#accountModal" onclick="fillAccountDetails()">
+            <div class="img profile-picture"></div>
+          </a>
+          <h3>
+            <%=user.user.username%>
+          </h3>
+          <h5>
+            <%=user.user.callSign%>
+          </h5>
+          <h5>Logged in as: Police Officer</h5>
+        </div>
+      </div>
+      <ul class="list-unstyled components mb-5">
+        <li>
+          <a href="/"><span class="fa fa-home mr-3"></span> <img style="display: inline; margin-top: -9px; vertical-align: text-top;" src="/static/images/favicon-32x32.png"></img> Lines Police CAD</a>
+        </li>
+        <li class="background-color-222">
+          <a type="button" data-toggle="collapse" data-target="#toggleSearch" aria-expanded="true"
+            aria-controls="toggleSearch" onclick="toggleCaret()"> Search <i class="fa fa-caret-right pull-right rotate"
+              style="margin-top: 0.3em;"></i></a>
+        </li>
+        <div class="collapse in" id="toggleSearch">
+          <input type="hidden" id="searchType" value="Civilian">
+  <li>
+    <a data-toggle="modal" onclick="showSearchDatabaseModal('Civilian')" data-search-type="Civilian"><span
+        class="fa fa-id-card ml-3 mr-3"></span> Name Database</a>
+  </li>
+  <li>
+    <a data-toggle="modal" onclick="showSearchDatabaseModal('Vehicle')" data-search-type="Vehicle"><span
+        class="fa fa-car ml-3 mr-3"></span> Plate Database</a>
+  </li>
+  <li>
+    <a data-toggle="modal" onclick="showSearchDatabaseModal('Firearm')" data-search-type="Firearm"><span
+        class="fa fa-database ml-3 mr-3"></span> Firearm Database</a>
+  </li>
+</div>
+        <li class="background-color-222">
+          <a type="button" data-toggle="collapse" data-target="#toggleUtilities" aria-expanded="false"
+            aria-controls="toggleUtilities" onclick="toggleCaret()"> Utilities <i
+              class="fa fa-caret-right pull-right rotate" style="margin-top: 0.3em;"></i></a>
+        </li>
+        <div class="collapse in" id="toggleUtilities">
+          <li>
+            <% if (user.user?.lastAccessedCommunity != null ) {%>
+  <a href="javascript:void(0)" onclick="showBoloModal()"><span
+      class="fa fa-exclamation-triangle ml-3 mr-3"></span>Create BOLO</a>
+<% } else {%>
+  <a data-toggle="modal" href="#nonCommunityBoloModal" class="mock-disabled"><span
+      class="fa fa-exclamation-triangle ml-3 mr-3"></span>Create BOLO</a>
+<% } %>
+          </li>
+          <!-- <li>
+            <a data-toggle="modal" href="#10codesModal"><span class="fa fa-list-alt ml-3 mr-3"></span> 10-Codes</a>
+          </li> -->
+          <li>
+            <a data-toggle="modal" href="#notepadModal"><span class="fa fa-clipboard ml-3 mr-3"></span> Notepad</a>
+          </li>
+          <li>
+            <a href="/penal-code"><span class="fa fa-laptop ml-3 mr-3"></span>Penal Codes <i
+                class="fa fa-external-link-alt"></i></a>
+          </li>
+          <li>
+            <a href="/map-interactive"><span class="fa fa-map ml-3 mr-3"></span> Map <i
+                class="fa fa-external-link-alt"></i></a>
+          </li>
+        </div>
+
+        <% include departments-sidebar %>
+        <% include community-sidebar %>
+        <% include other-sidebar %>
+      </ul>
+
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content" class="">
+      <nav id="topNav" class="topNav" style="z-index: 8; margin-bottom: 0; position: fixed;">
+        <div class="container-fluid" style="height: 70px;">
+          <div class="custom-menu" style="position: absolute; top: 10px;">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary btn-lg"
+              style="z-index: 9;color: white;background: transparent;border-radius: unset;padding-right: 2em; border: transparent;">
+              <i class="fa fa-bars" aria-hidden="true" style="z-index: 9; font-size: 1.5em;"></i>
+            </button>
+          </div>
+          <div class="navbar-header" style="position: absolute; left: 85px;">
+            <h1 class="cursive"><a href="/police-dashboard"><i class="fa fa-star"></i> Police Operations</a> • <a href="/community-dashboard"><span id="community-name"></span></a></h1>
+            
+          </div>
+          
+        </div>
+        <a style="z-index: 8;width: 100%; cursor: default;">
+          <div id="signal-100-banner" class="panel panel-danger hide">
+            <div class="panel-heading">
+              <span class="panel-title">🚨🚨🚨 Signal 100 In Effect! 🚨🚨🚨</span>
+            </div>
+          </div>
+        </a>
+        <a style="z-index: 8;width: 100%; cursor: default;">
+          <div id="hold-traffic-banner" class="panel panel-warning hide">
+            <div class="panel-heading">
+              <span class="panel-title">⚠️⚠️⚠️ 10-3 Active: hold all radio traffic! ⚠️⚠️⚠️</span>
+            </div>
+          </div>
+        </a>
+      </nav>
+
+      <header id="second" style='background-image: url("/static/images/hway_bkground.jpg");'>
+        <div class="header-content margin-top-2">
+          <div class="inner" style="margin-top: 9em;">
+            
+
+                    <% if (context=="createTicketSuccess" ) {%>
+                      <div class="alert alert-success alert-dismissible show" role="alert">
+                        <strong>Success!</strong> Citation created successfully
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <% } else if (context=="createWarningSuccess" ) {%>
+                        <div class="alert alert-success alert-dismissible show" role="alert">
+                          <strong>Success!</strong> Warning created successfully
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                        </div>
+                        <% } else if (context=="createArrestSuccess" ) {%>
+                          <div class="alert alert-success alert-dismissible show" role="alert">
+                            <strong>Success!</strong> Arrest created successfully
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <% } else if (context=="createWarrantSuccess" ) {%>
+                            <div class="alert alert-success alert-dismissible show" role="alert">
+                              <strong>Success!</strong> Warrant created successfully
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <% } else if (context=="createBoloSuccess" ) {%>
+                              <div class="alert alert-success alert-dismissible show" role="alert">
+                                <strong>Success!</strong> Bolo created successfully
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <%} else if (context=="updateSuccess" ) {%>
+                                <div class="alert alert-success alert-dismissible show" role="alert">
+                                  <strong>Success!</strong> Updated successfully
+                                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                  </button>
+                                </div>
+                                <%} else if (context=="deleteSuccess" ) {%>
+                                  <div class="alert alert-success alert-dismissible show" role="alert">
+                                    <strong>Success!</strong> Deleted successfully
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <%}%>
+
+                                <!-- imports the community specific alerts -->
+                                <% include community-alerts %>
+
+                                  <div class="container text-center width-100 margin-top-2">
+                                    <% if (user.user?.lastAccessedCommunity !=null ) {%>
+                                      
+                                            <h4 id="currentStatus" class="text-align-center">Your Current Status:
+                                              <%=user.user.dispatchStatus%>
+                                            </h4>
+                                            <h5 id="statusSetBy" class="text-align-center">Set By:
+                                              <%=user.user.dispatchStatusSetBy%>
+                                            </h5>
+                                            <div class="modal-body">
+  <h4>10-Codes</h4>
+  <hr style="width: 88%;max-width: 100rem;">
+  
+  <div class="form-group">
+    <label for="tenCodeSearch" class="col-md-4 control-label">Search 10-Codes:</label>
+    <div class="col-md-8">
+      <input id="tenCodeSearch" type="text" placeholder="Search by code or description" class="form-control input-md">
+    </div>
+  </div>
+
+  <div id="noTenCodes" class="alert alert-info" style="display: none;">
+    No 10-codes available for this community.
+  </div>
+
+  <div class="" style="color: grey; margin-top: 2em; padding-top: 2em; font-size: 1.2em;">
+    <h5> Click on the code to set as your status.</h5>
+  </div>
+
+  <table id="tenCodesTable" class="table table-striped table-bordered" style="display: none;">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody id="tenCodesBody"></tbody>
+  </table>
+
+  <nav aria-label="10-Codes Pagination">
+    <ul id="tenCodesPagination" class="pagination justify-content-center"></ul>
+  </nav>
+</div>
+                                            <% } %>
+
+                                              
+                                                  <% if (user.user?.lastAccessedCommunity==null) {%>
+                                                    <div class="col-lg-10 col-lg-offset-1 margin-top-2 text-center">
+                                                      <h3><i class="fa fa-arrow-left"></i> Click on any of the search
+                                                        buttons to get started</h3>
+                                                      <hr style="width: 88%;max-width: 100rem;">
+                                                      <h4>Looks like you are not in a community, click here to get
+                                                        started!</h4>
+                                                      <p><a data-toggle="modal" href="#communitiesModal">Create/Join A
+                                                          Community</a></p>
+                                                    </div>
+                                                    <% } %>
+                                  </div>
+          </div>
+        </div>
+      </header>
+      <div class="adsbygoogle">
+        <% include ad-body %>
+      </div>
+      <section style='background-image: url("/static/images/blue-clouds.jpg"); padding:0'>
+        <hr class="margin-top-2" style="width: 88%;max-width: 100rem;">
+        <div class="container">
+          <div id="active-bolo-container" class="col-lg-10 col-lg-offset-1 margin-top-2">
+          </div>
+        </div>
+        <div class="container">
+          <div id="assigned-call-container" class="col-lg-10 col-lg-offset-1 margin-top-2">
+            
+
+          </div>
+        </div>
+      </section>
+
+      <div class="google-ad"></div>
+      <% include footer %>
+    </div>
+  </div>
+
+  <div id="galleryModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-body">
+          <img src="" id="galleryImage" class="img-responsive" />
+          <p>
+            <br />
+            <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">Close <i
+                class="ion-android-close"></i></button>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% include search-database %>
+  <% include details-modal %>
+
+  <div id="viewLicense" class="modal fade" style="z-index: 9000" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+            <form class="form-horizontal" action="/updateOrDeleteLicense" method="post">
+              <fieldset>
+
+            <!-- Form Name -->
+            <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal" aria-hidden="true">X</button>
+            <h4>License Details:</h4>
+            <hr style="width: 88%;max-width: 100rem;">
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="license-type">License Type:</label>
+              <div class="col-md-5">
+                <select id="license-type-details" name="licenseType" class="form-control disabled-color" required="" readonly="readonly">
+                  <% include license-list %>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="license-status"><i id="isSuspendedAlert" class="fa-solid fa-circle-exclamation color-alert-red"></i> License Status:</label>
+              <div class="col-md-5">
+                <select id="license-status-details" name="licenseStatus" class="form-control disabled-color" required="" readonly="readonly">
+                  <option value="pending">Pending</option>
+                  <option value="valid">Valid</option>
+                  <option value="expired">Expired</option>
+                  <option value="suspended">Suspended</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="expirationDate">Expiration Date:</label>
+              <div class="col-md-5">
+              <input id="expirationDate-details" name="expirationDate" type="date" max="2999-12-31" min="1900-01-01" class="form-control input-md disabled-color" required="" readonly="readonly">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-3 control-label" for="additionalNotes">Additional Notes:</label>
+              <div class="col-md-8">
+                <input id="additionalNotes-details" name="additionalNotes" type="text" placeholder="additional notes" class="form-control input-md disabled-color" required="" readonly="readonly">
+              </div>
+            </div>
+
+            <div class="col-md-12 text-align-center margin-bottom-2">
+                <input type="hidden" id="licenseID" name="licenseID">
+                <input type="hidden" id="licenseOwnerID" name="licenseOwnerID">
+                <input type="hidden" name="backLocation" value="/police-dashboard">
+                <button type="submit" id="reinstateLicenseBtn" value="update" name="action" class="btn btn-info" onclick="updateToReinstated()">Reinstate License</button>
+                <button type="submit" id="suspendLicenseBtn" value="update" name="action" class="btn btn-danger" onclick="updateToSuspended()">Suspend License</button>
+            </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="viewVeh" class="modal fade" style="z-index: 9000" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+            <form class="form-horizontal" action="/updateOrDeleteVeh" method="post">
+              <fieldset>
+
+            <!-- Form Name -->
+            <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal" aria-hidden="true">X</button>
+            <h4>Vehicle Details:</h4>
+            <hr style="width: 88%;max-width: 100rem;">
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="vinVeh">Vin #</label>
+              <div class="col-md-4">
+                <input id="vinVeh" name="vinVeh" type="text" minlength="17" maxlength="17" class="form-control input-md disabled-color" required readonly="readonly">
+              </div>
+              <div id="no-existing-vin" class="col-md-4">
+                <button type="button" class="btn btn-info btn-md" onclick="generateSerialNumber(17, 'vinVeh')">Generate</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="roVeh">Owner:</label>
+              <button id="lookupButton" data-toggle="modal" href="#nameSearchResults" data-dismiss="modal" aria-hidden="true" class="btn btn-info btn-md" style="margin-left: 1em; margin-bottom: 1em;"><i class="fa-solid fa-magnifying-glass"></i> Lookup</button>
+              <div class="col-md-4">
+                <input id="roVeh" name="roVeh" type="text" class="form-control input-md disabled-color capitalize" required readonly="readonly">
+              </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="plate">Plate:</label>
+                <div class="col-md-4">
+                  <input id="plateVeh" name="plateVeh" type="text" maxlength="8" placeholder="Plate" class="form-control input-md disabled-color" required readonly="readonly">
+                </div>
+              </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="model">Model:</label>
+                <div class="col-md-4">
+                  <input id="modelVeh" name="modelVeh" type="search" placeholder="Model" class="form-control input-md disabled-color" required readonly="readonly">
+                </div>
+              </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="colorView">Color:</label>
+                <div class="col-md-4">
+                  <input id="colorView" name="colorView" type="text" placeholder="Color" class="form-control input-md disabled-color" required readonly="readonly">
+                </div>
+              </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="valid-registration"><i id="invalidRegistrationAlert" class="fa-solid fa-triangle-exclamation color-yellow"></i> Valid Registration?</label>
+                <div class="col-md-4">
+                  <select id="validRegView" name="validRegView" class="form-control disabled-color" selected="selected" required readonly="readonly">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+              </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="validInsView"><i id="invalidInsuranceAlert" class="fa-solid fa-triangle-exclamation color-yellow"></i> Valid Insurance?</label>
+                <div class="col-md-4">
+                  <select id="validInsView" name="validInsView" class="form-control disabled-color" selected="selected" required readonly="readonly">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                  </select>
+                </div>
+              </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="stolenView"><i id="isStolenAlert" class="fa-solid fa-circle-exclamation color-alert-red"></i> Marked Stolen?</label>
+                <div class="col-md-4">
+                  <select id="stolenView" name="stolenView" class="form-control disabled-color" selected="selected" required readonly="readonly">
+                    <option value="false">No</option>
+                    <option value="true">Yes</option>
+                  </select>
+                </div>
+              </div>
+
+            <div class="col-md-12 text-align-center">
+                <input type="hidden" id="vehicleID" name="vehicleID">
+                <input type="hidden" name="backLocation" value="/police-dashboard">
+                <button id="markStolenBtn" type="submit" value="update" name="action" class="btn btn-danger" onclick="updateToIsStolen()">Mark Stolen</button>
+                <!-- <button type="submit" value="delete" name="action" class="btn btn-danger">Delete Vehicle</button> -->
+            </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="boloDetailModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form id="update-bolo-form" class="form-horizontal" onsubmit="event.preventDefault(); handleUpdateBolo();">
+          <fieldset>
+            <!-- Form Name -->
+            <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal" aria-hidden="true">X</button>
+            <h4>BOLO Details</h4>
+            <hr style="width: 88%;max-width: 100rem;">
+
+            <!-- Text input-->
+            <div class="form-group required">
+              <label class="col-md-4 control-label" for="boloTitleDetail">Title:</label>
+              <div class="col-md-4">
+                <input id="boloTitleDetail" name="boloTitle" style="text-transform: capitalize;" type="text"
+                  placeholder="Title" class="form-control input-md" maxlength="50" required>
+              </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group required">
+              <label class="col-md-4 control-label" for="locationDetail">Location:</label>
+              <div class="col-md-4">
+                <input id="locationDetail" name="location" style="text-transform: capitalize;" type="text"
+                  placeholder="Location" class="form-control input-md" maxlength="50" required>
+              </div>
+            </div>
+
+            <!-- Text Area input-->
+            <div class="form-group required">
+              <label class="col-md-4 control-label" for="descriptionDetail">Description:</label>
+              <div class="col-md-8 col-md-offset-2">
+                <textarea id="descriptionDetail" name="description" rows="4" maxlength="500"
+                  placeholder="Description" class="form-control input-md" required></textarea>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="dateCreatedDetail">Date Created:</label>
+              <div class="col-md-4">
+                <h5 id="dateCreatedDetail"></h5>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="lastUpdatedDetail">Last Updated:</label>
+              <div class="col-md-4">
+                <h5 id="lastUpdatedDetail"></h5>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="statusDetail">Status:</label>
+              <div class="col-md-4">
+                <h5 id="statusDetail"></h5>
+              </div>
+            </div>
+
+            <!-- Hidden input for boloID -->
+            <input id="boloIDDetail" type="hidden" name="boloID" value="">
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="updateBolo"></label>
+              <div class="col-md-4 text-align-center">
+                <button id="updateBolo" type="submit" class="btn btn-info">Update</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <form id="delete-bolo-form" onsubmit="event.preventDefault(); handleDeleteBolo();">
+          <fieldset>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="deleteBolo"></label>
+              <div class="col-md-4 text-align-center">
+                <button id="deleteBolo" type="submit" class="btn btn-danger">Delete</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div id="viewWarrant" class="modal fade" style="z-index: 9000" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form id="warrant-form" class="form-horizontal" action="/updateOrDeleteWarrant" method="POST">
+            <fieldset>
+
+              <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal"
+                aria-hidden="true">X</button>
+              <h4>Warrant Details</h4>
+              <hr style="width: 88%;max-width: 100rem;">
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="view-warrant-civ-first-name">First Name:</label>
+                <div class="col-md-4">
+                  <input id="view-warrant-civ-first-name" name="accusedFirstName" type="text" placeholder="First Name"
+                    class="form-control input-md disabled-color" style="text-transform:capitalize;" required="" readonly="readonly">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="view-warrant-civ-last-name">Last Name:</label>
+                <div class="col-md-4">
+                  <input id="view-warrant-civ-last-name" name="accusedLastName" type="text" placeholder="Last Name"
+                    class="form-control input-md disabled-color" style="text-transform:capitalize;" required="" readonly="readonly">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="view-warrant-civ-dob">DOB:</label>
+                <div class="col-md-4">
+                  <input id="view-warrant-civ-dob" name="dateOfBirth" type="date" placeholder="mm/dd/yyyy"
+                    class="form-control input-md disabled-color" required="" readonly="readonly">
+                </div>
+              </div>
+
+              <div class="form-group" style="display:none">
+                <label class="col-md-4 control-label" for="view-civIDWarrant">Selected ID:</label>
+                <div class="col-md-4">
+                  <input id="view-civIDWarrant" name="accusedID" type="text" placeholder="Autofill from searching"
+                    class="form-control input-md disabled-color" data-trigger="warrant-id-popover"
+                    data-content="* ID is required, try using the search button above." required readonly="readonly">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="charge">Warrant Reason:</label>
+                <div class="col-md-4">
+                  <select id="view-warrant-select" class="form-control disabled-color" name="reasons" disabled>
+                    <option>Failure to Appear</option>
+                    <option>Murder</option>
+                    <option>Felony Evasion</option>
+                    <option>Prison Escape</option>
+                    <option id="view-warrant-other-option">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="view-warrant-other-div" class="form-group required" style="display:none">
+                <label class="col-md-4 control-label" for="warrant-other">Other:</label>
+                <div class="col-md-4">
+                  <input id="view-warrant-other" name="other" type="text" placeholder="other" class="form-control input-md"
+                    style="text-transform:capitalize;">
+                </div>
+              </div>
+
+              <input id="view-warrant-date" type="hidden" name="date" value="">
+              <input id="view-warrant-time" type="hidden" name="time" value="">
+              <input id="view-warrant-reportingOfficer" type="hidden" name="reportingOfficer" value=<%=user.user.username%>>
+              <!-- Button -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="submitWarrantCreation"></label>
+                <div class="col-md-4">
+                  <input type="hidden" name="route" value="police-dashboard">
+                  <button type="button" class="btn btn-info margin-bottom-05" id="confirmWarrantModal" data-toggle="modal" href="#confirmClearWarrantModal" onclick="clearWarrantWithValues()">Clear</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ticketModal" class="modal fade" style="z-index: 9000" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form id="ticket-form" class="form-horizontal">
+            <fieldset>
+
+              <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal"
+                aria-hidden="true">X</button>
+              <h4>Issue Citation</h4>
+              <hr style="width: 88%;max-width: 100rem;">
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="ticket-civ-name">Civilian Name</label>
+                <div class="col-md-4">
+                  <h4 id="ticket-civ-name"></h4>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="ticket-civ-action-type">Action Type</label>
+                <div class="col-md-4">
+                  <h4 id="ticket-civ-action-type"></h4>
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="col-md-4 control-label" for="plate">Date</label>
+                <div class="col-md-4">
+                  <h4 id="ticket-civ-date"></h4>
+                </div>
+              </div>
+
+              <div class="form-group" style="display:none">
+                <label class="col-md-4 control-label" for="civID">Selected ID</label>
+                <div class="col-md-4">
+                  <input id="civID" name="civID" type="text" placeholder="Autofill from searching"
+                    class="form-control input-md disabled-color" data-trigger="id-popover"
+                    data-content="* ID is required, try using the search button above." required readonly="readonly">
+                </div>
+              </div>
+
+              <!-- Multiple Checkboxes (inline) -->
+               <div class="form-group required">
+  <label class="col-md-4 control-label" for="fines">Fines</label>
+  <div class="col-md-8">
+    <select id="ticket-select" name="fines" class="form-control" multiple required>
+      <optgroup label="Crime not listed">
+        <option id="ticket-option-other">Other</option>
+      </optgroup>
+    </select>
+    <script>
+      $('#ticket-select').on('change', function() {
+      });
+    </script>
+  </div>
+</div>
+              <!-- <div class="form-group required">
+                <label class="col-md-4 control-label" for="fines">Fines</label>
+                <div class="col-md-4">
+
+                  <select id="ticket-select" name="fines" class="select-move" multiple required>
+                    <% include citation-list %>
+                      <optgroup label="Crime not listed">
+                        <option id="ticket-option-other">Other</option>
+                      </optgroup>
+                  </select>
+                </div>
+              </div> -->
+
+              <div id="ticket-other-div" class="form-group required" style="display:none">
+                <label class="col-md-4 control-label" for="ticket-other">Other</label>
+                <div class="col-md-4">
+                  <input id="ticket-other" name="other" type="text" placeholder="other" class="form-control input-md"
+                    style="text-transform:capitalize;">
+                </div>
+              </div>
+
+              <!-- Text input-->
+              <div class="form-group required">
+                <label class="col-md-4 control-label" for="amount">Fine Amount</label>
+                <div class="col-md-4">
+                  <input id="amount" name="amount" type="number" placeholder="$ amount" max="999999"
+                    class="form-control input-md" required="">
+                </div>
+              </div>
+              <input type="hidden" name="isWarning" value="false">
+              <!-- Button -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="submitTicket"></label>
+                <div class="col-md-4">
+                  <input id="crimeList" type="hidden" name="crimeList" value="">
+                  <input type="hidden" name="officerID" value="<%=user._id%>">
+                  <input type="hidden" name="route" value="police-dashboard">
+                  <button id="submitTicket" class="btn btn-primary" onclick="hideTicketCivPopover()" type="submit">Submit</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="warningModal" class="modal fade" style="z-index: 9000" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form id="warning-form" class="form-horizontal">
+            <fieldset>
+
+              <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal"
+                aria-hidden="true">X</button>
+              <h4>Issue Warning</h4>
+              <hr style="width: 88%;max-width: 100rem;">
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="warning-civ-first-name">Civilian Name</label>
+                <div class="col-md-4">
+                  <h4 id="warning-civ-first-name"></h4>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="warning-civ-action-type">Action Type</label>
+                <div class="col-md-4">
+                  <h4 id="warning-civ-action-type"></h4>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="warning-civ-date">Date</label>
+                <div class="col-md-4">
+                  <h4 id="warning-civ-date"></h4>
+                </div>
+              </div>
+
+              <div id="warning-other-div" class="form-group required">
+                <label class="col-md-4 control-label" for="warning-civ-additional-notes">Additional Notes</label>
+                <div class="col-md-8">
+                  <input id="warning-civ-additional-notes" name="warning-civ-additional-notes" type="text" placeholder="Enter any additional details or notes" class="form-control input-md"
+                    style="text-transform:capitalize;">
+                </div>
+              </div>
+
+              <input id="civIDWarning" type="hidden" name="civIDWarning">
+              <input type="hidden" name="amount" value="0">
+              <!-- Button -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="submitWarning"></label>
+                <div class="col-md-4">
+                  <input type="hidden" name="route" value="police-dashboard">
+                  <input id="warningCrimeList" type="hidden" name="crimeList" value="">
+                  <button id="submitWarning" class="btn btn-primary" onclick="hideWarningCivPopover()" type="submit">Submit</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="arrestModal" class="modal fade" style="z-index: 9000" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form id="arrest-form" class="form-horizontal">
+            <fieldset>
+
+              <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal"
+                aria-hidden="true">X</button>
+              <h4>San Andreas Arrest Report</h4>
+              <hr style="width: 88%;max-width: 100rem;">
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-report-case-no">Report Number:</label>
+                <div class="col-md-4">
+                  <input id="arrest-report-case-no" name="caseNumber" type="number" class="form-control input-md"
+                    readonly="readonly">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-report-date">Date of Arrest:</label>
+                <div class="col-md-4">
+                  <input id="arrest-report-date" name="date" type="date" min="1900-01-01" max="2999-12-31"
+                    class="form-control input-md" required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-report-time">Arrest Time:</label>
+                <div class="col-md-4">
+                  <input id="arrest-report-time" name="time" type="time" placeholder="hh:mm"
+                    class="form-control input-md" required="">
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="col-md-4 control-label" for="arrest-location">Arrest Location:</label>
+                <div class="col-md-4">
+                  <input id="arrest-location" name="arrest-location" type="text" placeholder="Arrest Location"
+                    class="form-control input-md" style="text-transform:capitalize;"
+                  required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-report-incident-date">Date of Incident:</label>
+                <div class="col-md-4">
+                  <input id="arrest-report-incident-date" name="date" type="date" min="1900-01-01" max="2999-12-31"
+                    class="form-control input-md" required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-report-incident-time">Incident Time:</label>
+                <div class="col-md-4">
+                  <input id="arrest-report-incident-time" name="time" type="time" placeholder="hh:mm"
+                    class="form-control input-md" required="">
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="col-md-4 control-label" for="incident-location">Incident Location:</label>
+                <div class="col-md-4">
+                  <input id="incident-location" name="arrest-location" type="text" placeholder="Arrest Location"
+                    class="form-control input-md" style="text-transform:capitalize;"
+                  required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="reporting-officer">Reporting Officer:</label>
+                <div class="col-md-4">
+                  <input id="reporting-officer" name="reportingOfficer" type="text" placeholder="Reporting Officer"
+                    class="form-control input-md" style="text-transform:capitalize;" value=<%=user.user.username%>
+                  required="" readonly="readonly">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-civ-first-name">Name</label>
+                <div class="col-md-4">
+                  <input id="arrest-civ-first-name" name="accusedFirstName" type="text" placeholder="Arrestee Name"
+                    class="form-control input-md" style="text-transform:capitalize;" required="">
+                </div>
+              </div>
+             
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-civ-dob">DOB</label>
+                <div class="col-md-4">
+                  <input id="arrest-civ-dob" name="dateOfBirth" type="date" placeholder="mm/dd/yyyy"
+                    class="form-control input-md" required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-civ-address">Address</label>
+                <div class="col-md-4">
+                  <input id="arrest-civ-address" name="accusedFirstName" type="text" placeholder="Address"
+                    class="form-control input-md" style="text-transform:capitalize;" required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-civ-height">Height</label>
+                <div class="col-md-4">
+                  <input id="arrest-civ-height" name="accusedFirstName" type="text" placeholder="Height"
+                    class="form-control input-md" style="text-transform:capitalize;" required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-civ-weight">Weight</label>
+                <div class="col-md-4">
+                  <input id="arrest-civ-weight" name="accusedFirstName" type="text" placeholder="Weight"
+                    class="form-control input-md" style="text-transform:capitalize;" required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-civ-eyes">Eye Color</label>
+                <div class="col-md-4">
+                  <input id="arrest-civ-eyes" name="accusedFirstName" type="text" placeholder="Eye Color"
+                    class="form-control input-md" style="text-transform:capitalize;" required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-civ-hair">Hair Color</label>
+                <div class="col-md-4">
+                  <input id="arrest-civ-hair" name="accusedFirstName" type="text" placeholder="Hair Color"
+                    class="form-control input-md" style="text-transform:capitalize;" required="">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="arrest-civ-phone">Phone Number</label>
+                <div class="col-md-4">
+                  <input id="arrest-civ-phone" name="accusedFirstName" type="text" placeholder="Phone Number"
+                    class="form-control input-md" style="text-transform:capitalize;">
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="col-md-4 control-label" for="arrest-civ-charges">Charges</label>
+                <div class="col-md-4">
+                  <input id="arrest-civ-charges" name="arrest-civ-charges" type="text" placeholder="Charges"
+                    class="form-control input-md" style="text-transform:capitalize;" required="">
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="col-md-4 control-label" for="arrest-civ-dob">Force Used?</label>
+                <div class="col-md-4">
+                  <select id="forceUsed" name="forceUsed" class="form-control" required="">
+                    <option value="">Force Used?</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group" style="display:none">
+                <label class="col-md-4 control-label" for="civIDArrest">Selected ID</label>
+                <div class="col-md-4">
+                  <input id="civIDArrest" name="accusedID" type="text" placeholder="Autofill from searching"
+                    class="form-control input-md disabled-color" data-trigger="arrest-id-popover"
+                    data-content="* ID is required, try using the search button above." required readonly="readonly">
+                </div>
+              </div>
+
+             
+
+              <hr />
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="detail">Narrative of
+                  Events:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <div class="col-md-10 col-md-offset-1">
+                  <textarea id="detail" name="detailOfEvent" type="text" maxlength="500" placeholder="Narrative of Events"
+                    class="form-control input-md" required></textarea>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="actions-taken">Witnesses
+                  :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+                <div class="col-md-10 col-md-offset-1">
+                  <textarea id="actions-taken" name="actionsTaken" type="text" maxlength="500"
+                    placeholder="Witness names and contact info" class="form-control input-md" required></textarea>
+                </div>
+              </div>
+
+              
+
+              <!-- Button -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="submitArrestReport"></label>
+                <div class="col-md-4">
+                  <input type="hidden" name="reportingOfficerID" value="<%=user._id%>">
+                  <input type="hidden" name="route" value="police-dashboard">
+                  <button id="submitArrestReport" type="submit" class="btn btn-primary"
+                    onclick="hideArrestReportPopover()">Submit</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="createWarrantModal" class="modal fade" style="z-index: 9000" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form id="warrant-form" class="form-horizontal" action="/create-warrant" method="POST">
+            <fieldset>
+
+              <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal"
+                aria-hidden="true">X</button>
+              <h4>Create Warrant</h4>
+              <hr style="width: 88%;max-width: 100rem;">
+
+              <div class="form-group required">
+                <label class="col-md-4 control-label" for="warrant-civ-first-name">First Name</label>
+                <div class="col-md-4">
+                  <input id="warrant-civ-first-name" name="accusedFirstName" type="text" placeholder="First Name"
+                    class="form-control input-md" style="text-transform:capitalize;" required="" readonly="readonly">
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="col-md-4 control-label" for="warrant-civ-last-name">Last Name</label>
+                <div class="col-md-4">
+                  <input id="warrant-civ-last-name" name="accusedLastName" type="text" placeholder="Last Name"
+                    class="form-control input-md" style="text-transform:capitalize;" required="" readonly="readonly">
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="col-md-4 control-label" for="warrant-civ-dob">DOB</label>
+                <div class="col-md-4">
+                  <input id="warrant-civ-dob" name="dateOfBirth" type="date" placeholder="mm/dd/yyyy"
+                    class="form-control input-md" required="" readonly="readonly">
+                </div>
+              </div>
+
+              <div class="form-group" style="display:none">
+                <label class="col-md-4 control-label" for="civIDWarrant">Selected ID</label>
+                <div class="col-md-4">
+                  <input id="civIDWarrant" name="accusedID" type="text" placeholder="Autofill from searching"
+                    class="form-control input-md disabled-color" data-trigger="warrant-id-popover"
+                    data-content="* ID is required, try using the search button above." required readonly="readonly">
+                </div>
+              </div>
+
+              <div class="form-group required">
+                <label class="col-md-4 control-label" for="charge">Warrant Reason</label>
+                <div class="col-md-4">
+                  <select id="warrant-select" name="reasons">
+                    <option>Failure to Appear</option>
+                    <option>Murder</option>
+                    <option>Felony Evasion</option>
+                    <option>Prison Escape</option>
+                    <option id="warrant-other-option">Other</option>
+                  </select>
+                </div>
+              </div>
+
+              <div id="warrant-other-div" class="form-group required" style="display:none">
+                <label class="col-md-4 control-label" for="warrant-other">Other</label>
+                <div class="col-md-4">
+                  <input id="warrant-other" name="other" type="text" placeholder="other" class="form-control input-md"
+                    style="text-transform:capitalize;">
+                </div>
+              </div>
+
+              <input id="warrant-date" type="hidden" name="date" value="">
+              <input id="warrant-time" type="hidden" name="time" value="">
+              <input id="warrant-reportingOfficer" type="hidden" name="reportingOfficer" value=<%=user.user.username%>>
+              <!-- Button -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="submitWarrantCreation"></label>
+                <div class="col-md-4">
+                  <input type="hidden" name="route" value="police-dashboard">
+                  <button id="submitWarrantCreation" class="btn btn-primary">Submit</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="callDetailModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form id="update-call-form" class="form-horizontal" onsubmit="event.preventDefault(); handleUpdateCall();">
+          <fieldset>
+            <!-- Form Name -->
+            <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal" aria-hidden="true">X</button>
+            <h4>Call Details</h4>
+            <hr style="width: 88%;max-width: 100rem;">
+
+            <!-- Read-only fields -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="createdAtCallDetail">Created At:</label>
+              <div class="col-md-4">
+                <h5 id="createdAtCallDetail"></h5>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="updatedAtCallDetail">Updated At:</label>
+              <div class="col-md-4">
+                <h5 id="updatedAtCallDetail"></h5>
+              </div>
+            </div>
+
+            <!-- Editable fields -->
+            <div class="form-group required">
+              <label class="col-md-4 control-label" for="callTitleDetail">Title:</label>
+              <div class="col-md-8">
+                <input id="callTitleDetail" name="title" type="text" placeholder="Title"
+                  class="form-control input-md" maxlength="100" required>
+              </div>
+            </div>
+
+            <div class="form-group required">
+              <label class="col-md-4 control-label" for="callDetailsDetail">Details:</label>
+              <div class="col-md-8">
+                <textarea id="callDetailsDetail" name="details" rows="4" maxlength="500"
+                  placeholder="Details" class="form-control input-md" required></textarea>
+              </div>
+            </div>
+
+            <!-- Dynamic department list -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="callDepartmentsDetail">Departments:</label>
+              <div class="col-md-8" id="callDepartmentsDetail"></div>
+            </div>
+
+            <!-- Dynamic assigned to list -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="callAssignedToDetail">Assigned To:</label>
+              <div class="col-md-8" id="callAssignedToDetail"></div>
+            </div>
+
+            <!-- Call notes display -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="callNotesDetail">Call Notes:</label>
+              <div class="col-md-8 col-md-offset-2" id="callNotesDetail" style="max-height: 200px; overflow-y: auto;"></div>
+            </div>
+
+            <!-- Hidden input for callId -->
+            <input id="callIdDetail" type="hidden" name="callId" value="">
+
+            <!-- Update Button -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="updateCall"></label>
+              <div class="col-md-4 text-align-center">
+                <button id="updateCall" type="submit" class="btn btn-info">Update</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+        <form id="delete-call-form" onsubmit="event.preventDefault(); handleDeleteCall();">
+          <fieldset>
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="deleteCall"></label>
+              <div class="col-md-4 text-align-center">
+                <button id="deleteCall" type="submit" class="btn btn-danger">Delete</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  #callDepartmentsDetail .badge,
+  #callAssignedToDetail .badge {
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+</style>
+
+  <div id="confirmClearWarrantModal" class="modal fade" style="z-index: 9999;" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form id="warrant-clear-form" class="form-horizontal" action="/clear-warrant" method="POST">
+            <fieldset>
+
+              <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal"
+                aria-hidden="true">X</button>
+              <h4>Clear Warrant?</h4>
+              <hr style="width: 88%;max-width: 100rem;">
+
+              <p id="warrant-reason"></p>
+              <!-- <input id="warrant-clear-date" type="hidden" name="updatedDate" value=""> -->
+              <!-- <input id="warrant-clear-time" type="hidden" name="updatedTime" value=""> -->
+              <input id="warrant-clearingOfficer" type="hidden" name="clearingOfficerID" value=<%=user._id%>>
+              <input id="warrant-ID" type="hidden" name="warrantID" value="">
+              <!-- Button -->
+
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="submitWarrantCreation"></label>
+                <div class="col-md-4">
+                  <input type="hidden" name="route" value="police-dashboard">
+                  <button id="submitWarrantClearCreation" class="btn btn-success"
+                    onclick="hideWarrantClearPopover()">Yes</button>
+                  <button class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="boloModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form id="create-bolo-form" class="form-horizontal" onsubmit="event.preventDefault(); handleCreateBolo();">
+          <fieldset>
+            <!-- Form Name -->
+            <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal" aria-hidden="true">X</button>
+            <h4>Create BOLO Alert</h4>
+            <hr style="width: 88%;max-width: 100rem;">
+
+            <!-- Text input: Title -->
+            <div class="form-group required">
+              <label class="col-md-4 control-label" for="boloTitle">Title:</label>
+              <div class="col-md-4">
+                <input id="boloTitle" name="title" style="text-transform: capitalize;" type="text"
+                  placeholder="Title" class="form-control input-md" maxlength="50" required>
+              </div>
+            </div>
+
+            <!-- Text input: Location -->
+            <div class="form-group required">
+              <label class="col-md-4 control-label" for="boloLocation">Last Seen Around:</label>
+              <div class="col-md-4">
+                <input id="boloLocation" name="location" style="text-transform: capitalize;" type="text"
+                  placeholder="Location" class="form-control input-md" maxlength="50" required>
+              </div>
+            </div>
+
+            <!-- Textarea: Description -->
+            <div class="form-group required">
+              <label class="col-md-4 control-label" for="boloDescription">Description:</label>
+              <div class="col-md-8 col-md-offset-2">
+                <textarea id="boloDescription" name="description" rows="4" maxlength="500"
+                  placeholder="Description" class="form-control input-md" required></textarea>
+              </div>
+            </div>
+
+            <!-- Scope toggle: Department or Community -->
+            <div class="form-group required">
+              <label class="col-md-4 control-label" for="boloScope">Scope:</label>
+              <div class="col-md-8">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="scope" id="scopeCommunity" value="Community" checked required>
+                  <label class="form-check-label" for="scopeCommunity">Community</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="scope" id="scopeDepartment" value="Department">
+                  <label class="form-check-label" for="scopeDepartment">Department</label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hidden inputs -->
+            <input type="hidden" id="boloCommunityID" name="communityID" value="<%= user.user.activeCommunity %>">
+            <input type="hidden" id="boloDepartmentID" name="departmentID" value="<%= departmentId %>">
+            <input type="hidden" id="boloReportedByID" name="reportedByID" value="<%= user._id %>">
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="createBolo"></label>
+              <div class="col-md-4 text-align-center">
+                <button id="createBolo" type="submit" class="btn btn-primary">Create</button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  <div id="nonCommunityBoloModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="modal-body">
+            <h2 class="text-center">I'm sorry! 😥</h2>
+            <p class="text-center">Looks like you are not in a community yet, so this feature is not enabled. </p>
+            <p>To join or
+              create a community for free, click on the communities button in the Left Menu.</p>
+            <p>Or just click here: <a data-toggle="modal" href="#communitiesModal">Communities</a>
+            </p>
+            <br />
+            <button class="btn btn-primary btn-lg center-block" data-dismiss="modal" aria-hidden="true">OK <i
+                class="ion-android-close"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="confirmClearBoloModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form id="bolo-clear-form" class="form-horizontal" action="/clear-bolo" method="POST">
+            <fieldset>
+
+              <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal"
+                aria-hidden="true">X</button>
+              <h4>Clear Bolo?</h4>
+              <hr style="width: 88%;max-width: 100rem;">
+
+              <p id="bolo-reason"></p>
+              <input id="bolo-clear-date" type="hidden" name="updatedAt" value="">
+              <input id="bolo-clearingOfficerID" type="hidden" name="clearingOfficerID" value=<%=user._id%>>
+              <input id="bolo-clearingOfficerUsername" type="hidden" name="clearingOfficerUsername"
+                value=<%=user.user.username%>>
+              <input id="bolo-ID" type="hidden" name="boloID" value="">
+
+              <!-- Button -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="submit-bolo-clear-creation"></label>
+                <div class="col-md-4">
+                  <input type="hidden" name="route" value="police-dashboard">
+                  <button id="submit-bolo-clear-creation" class="btn btn-success">Yes</button>
+                  <button class="btn btn-danger" data-dismiss="modal">No</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="communitiesModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="joinCommunityModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal" action="/joinPoliceCommunity" method="post">
+            <fieldset>
+
+              <!-- Form Name -->
+              <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal"
+                aria-hidden="true">X</button>
+              <h4>Join an Existing Community</h4>
+              <hr style="width: 88%;max-width: 100rem;">
+
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="communityCode">Community Code:</label>
+                <div class="col-md-4">
+                  <input id="communityCode" name="communityCode" style="text-transform: uppercase;" type="text"
+                    placeholder="Example: YRFGHHP" class="form-control input-md" minlength="7" maxlength="7" required>
+                </div>
+              </div>
+
+              <!-- Button -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="joinCommunity"></label>
+                <div class="col-md-4 text-align-center">
+                  <input type="hidden" name="route" value="police-dashboard">
+                  <button id="joinCommunity" value="<%= user._id %>" name="userID" class="btn btn-primary">Join</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="createCommunityModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form class="form-horizontal" action="/createPoliceCommunity" method="post">
+            <fieldset>
+
+              <!-- Form Name -->
+              <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal"
+                aria-hidden="true">X</button>
+              <h4>Create a New Community</h4>
+              <hr style="width: 88%;max-width: 100rem;">
+
+              <!-- Text input-->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="communityName">Community Name:</label>
+                <div class="col-md-4">
+                  <input id="communityName" name="communityName" style="text-transform: capitalize;" type="text"
+                    placeholder="Community Name" class="form-control input-md" maxlength="25" required>
+                </div>
+              </div>
+
+              <!-- Button -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="createCommunity"></label>
+                <div class="col-md-4 text-align-center">
+                  <input type="hidden" name="route" value="police-dashboard">
+                  <button id="createCommunity" value="<%= user._id %>" name="userID"
+                    class="btn btn-primary">Create</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="communitiesInfoModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <fieldset>
+            <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal"
+              aria-hidden="true">X</button>
+            <h4>Check out the New Communities Section!</h4>
+            <hr style="width: 88%;max-width: 100rem;">
+            <a data-toggle="modal" href="#communitiesModal" onclick="dismissCommunitiesInfoModal()"><img
+                src="/images/communities-example.png" class="diagonal-arrow float-right"
+                alt="communities example screenshot"></a>
+            <img src="/static/images/diagonal-arrow-white.png" class="diagonal-arrow"
+              alt="diagonal arrow pointing to top right of page">
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% include account-management %>
+
+  <div id="panicDetailModal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <form id="clear-panic-form" class="form-horizontal" action="" method="post">
+            <fieldset>
+
+              <!-- Form Name -->
+              <button class="btn btn-primary btn-md float-right" type="button" data-dismiss="modal"
+                aria-hidden="true">X</button>
+              <h4>Clear Panic</h4>
+              <hr style="width: 88%;max-width: 100rem;">
+
+              <!-- Button -->
+              <div class="form-group">
+                <label class="col-md-4 control-label" for="deleteAccount"></label>
+                <div class="col-md-4 text-align-center">
+                  <input id="panic-id" type="hidden" name="panic-id" value="">
+                  <button id="clearPanic" class="btn btn-danger"
+                    onclick="hideModal('panicDetailModal')">Clear</button>
+                </div>
+              </div>
+            </fieldset>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <% include partials/notificationModal %>
+  <!-- <% include 10-codes %> -->
+  <% include notepad %>
+</body>
+</div>
+</div>
+</div>
+</div>
+
+<!--scripts loaded here -->
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/jquery.easing.min.js"></script>
+<script src="/static/js/wow.js"></script>
+<script src="/static/js/popper.js"></script>
+<script src="/static/js/main.js"></script>
+<script src="/static/js/police-dashboard.js"></script>
+<script src="/static/js/departments.js"></script>
+ <script src="/static/js/search-database.js"></script>
+ <script src="/static/js/details-modal.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/notifications.js"></script>
+<script src="/static/js/ads.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.0/jquery.cookie.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script>if (window.module) module = window.module;</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+
+</html>
+<script>
+    var dbUser = <%- JSON.stringify(user) %>;
+    const API_URL = 'https://police-cad-app-api-bc6d659b60b3.herokuapp.com';
+var departmentId = <%- JSON.stringify(departmentId) %>;
+var tenCodesCache = [];
+var tenCodeMap = {}; // Map tenCodeID to code (e.g., { "123": "10-8" })
+var filteredTenCodes = [];
+var currentPage = 1;
+const codesPerPage = 10;
+
+    // Utility function to convert DD/MM/YYYY to YYYY-MM-DD
+    function convertToYYYYMMDD(dateString) {
+      if (!dateString) return '';
+      const yyyymmddRegex = /^\d{4}-\d{2}-\d{2}$/;
+      const ddmmyyyyRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+      if (yyyymmddRegex.test(dateString)) {
+        const date = new Date(dateString);
+        if (!isNaN(date.getTime())) return dateString;
+        console.warn(`Invalid date in YYYY-MM-DD format: ${dateString}`);
+        return '';
+      }
+      if (ddmmyyyyRegex.test(dateString)) {
+        const [day, month, year] = dateString.split('/');
+        const converted = `${year}-${month}-${day}`;
+        const date = new Date(converted);
+        if (!isNaN(date.getTime())) return converted;
+        console.warn(`Invalid date in DD/MM/YYYY format: ${dateString}`);
+        return '';
+      }
+      console.warn(`Unrecognized date format: ${dateString}`);
+      return '';
+    }
+
+    $('.profile-picture').css("background-image", `url(${dbUser?.user?.profilePicture || 'https://ui-avatars.com/api/?name='+dbUser?.user?.username+'&background=808080&color=fff&size=256'})`)
+
+    // AJAX function to update officer status
+function updateStatus(statusCode) {
+  const userId = dbUser._id;
+  const communityId = dbUser.user?.lastAccessedCommunity.communityID;
+  const data = { departmentID: departmentId, tenCodeID: statusCode };
+  $.ajax({
+    url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/community/${communityId}/members/${userId}/tenCode`,
+    method: 'PUT',
+    data: JSON.stringify(data),
+    contentType: 'application/json',
+    success: function(res) {
+      const status = tenCodeMap[statusCode] || 'Unknown';
+      $('#currentStatus').text(`Your Current Status: ${status}`).animate({
+        fontSize: "19px",
+        fontWeight: "900"
+      }, 600).animate({
+        fontSize: "18px"
+      }, 600);
+      $('#statusSetBy').text(`Set By: ${dbUser.user.username}`);
+    },
+    error: function(xhr) {
+      console.error('Error updating status:', xhr.responseText);
+      alert('Failed to update status: ' + (xhr.responseJSON?.message || 'Unknown error'));
+    }
+  });
+}
+
+    // Handle 10-code selection
+function selectTenCode(tenCodeID) {
+  if (!tenCodeID) {
+    console.error('Invalid tenCodeID:', tenCodeID);
+    alert('Invalid 10-code selected.');
+    return;
+  }
+  // Verify 10-code in cache
+  const tenCode = tenCodesCache.find(tc => tc._id === tenCodeID);
+  if (!tenCode) {
+    console.error('10-code not found in cache:', tenCodeID);
+    alert('Selected 10-code not found.');
+    return;
+  }
+  updateStatus(tenCodeID);
+  $('#10codesModal').modal('hide'); // Close modal after selection
+}
+
+    // AJAX function to load panic statuses, signal 100, and hold traffic
+    function loadPanicStatuses() {
+      const communityId = dbUser.user?.lastAccessedCommunity.communityID;
+      if (!communityId) return;
+      $.ajax({
+        url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/community/${communityId}/panic`,
+        method: 'GET',
+        success: function(data) {
+          // Update signal 100 and hold traffic banners
+          $('#signal-100-banner').toggleClass('show', data.signal100).toggleClass('hide', !data.signal100);
+          $('#hold-traffic-banner').toggleClass('show', data.holdTraffic).toggleClass('hide', !data.holdTraffic);
+
+          // Update panic alerts
+          $('#panic-placeholder-socket').empty();
+          $('#panic-placeholder').append('<div id="panic-placeholder-socket"></div>');
+          data.panicAlerts.forEach(alert => {
+            $('#panic-placeholder-socket').append(
+              `<a id="${alert.userId}-panic-row" data-toggle="modal" href="#panicDetailModal" onclick="populatePanicDetails('${alert.userId}')">
+                <div class="alert alert-danger alert-dismissible show" role="alert">
+                  <strong>Panic! </strong> Triggered by: <span id="${alert.userId}-panic-username">${alert.username}</span>
+                  <button type="button" class="close" aria-label="Close"><span aria-hidden="true">×</span></button>
+                </div>
+              </a>`
+            );
+          });
+        },
+        error: function(xhr) {
+          console.error('Error loading panic statuses:', xhr.responseText);
+        }
+      });
+    }
+
+    // AJAX function to clear panic alert
+    function clearPanic(userId) {
+      $.ajax({
+        url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/police/${userId}/panic`,
+        method: 'DELETE',
+        success: function() {
+          $(`#${userId}-panic-row`).fadeOut(1, function() { $(this).remove(); });
+        },
+        error: function(xhr) {
+          console.error('Error clearing panic:', xhr.responseText);
+          alert('Failed to clear panic: ' + (xhr.responseJSON?.message || 'Unknown error'));
+        }
+      });
+    }
+
+    // AJAX function to load active BOLOs
+    function loadActiveBOLOs() {
+      const communityId = dbUser.user?.lastAccessedCommunity.communityID;
+      if (!communityId) return;
+      $.ajax({
+        url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/bolos?communityId=${communityId}&departmentId=${departmentId}&status=true`,
+        method: 'GET',
+        success: function(bolos) {
+          const $container = $('#active-bolo-container');
+          $container.find('a').remove(); // Clear existing BOLOs
+          $container.find('span').remove(); // Clear existing header
+          $container.append('<span><h4>Active BOLOs: </h4><h5>Click for details</h5></span>');
+          bolos.data.forEach(bolo => {
+            $container.append(
+          `<a id="${bolo._id}-row" href="javascript:void(0)" onclick="event.stopPropagation(); populateBoloDetails('${bolo._id}');">
+            <div class="alert alert-warning alert-dismissible show" role="alert">
+              <strong>BOLO! </strong> <span id="${bolo._id}-type" style="text-transform:capitalize">${bolo?.bolo?.title}</span>
+              Last Seen: <span id="${bolo._id}-location">${bolo?.bolo?.location}</span> | Description: <span id="${bolo._id}-description">${bolo?.bolo?.description}</span>
+            </div>
+          </a>`
+        );
+          });
+        },
+        error: function(xhr) {
+          console.error('Error loading BOLOs:', xhr.responseText);
+        }
+      });
+    }
+
+    // AJAX function to load assigned calls
+function loadAssignedCalls() {
+  const communityId = dbUser.user?.lastAccessedCommunity.communityID;
+  const userId = dbUser._id;
+  if (!communityId) return;
+  $.ajax({
+    url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/calls/community/${communityId}?status=true`,
+    method: 'GET',
+    success: function(data) {
+      const $container = $('#assigned-call-container');
+      $container.find('a').remove();
+      $container.find('span').remove();
+      $container.append('<span><h4>Open Calls: </h4><h5>Click for details</h5></span>');
+      data.forEach(call => {
+        const is911Call = (call?.call?.title?.startsWith('911:') || call?.call?.details?.startsWith('911:'));
+        const alertClass = is911Call ? 'alert-danger' : 'alert-success';
+        $container.append(
+          `<a id="${call._id}" href="javascript:void(0)" onclick="event.stopPropagation(); populateCallDetails('${call._id}');">
+            <div class="alert ${alertClass} alert-dismissible show" role="alert">
+              Opened: <span id="${call._id}-createdAt" style="text-transform:capitalize">
+                <time>${call?.call?.createdAt}</time> | Description: <span id="${call._id}-description">${call?.call?.title} | ${call?.call?.details}</span>
+              </span>
+            </div>
+          </a>`
+        );
+      });
+    },
+    error: function(xhr) {
+      console.error('Error loading assigned calls:', xhr.responseText);
+    }
+  });
+}
+
+    // AJAX function to fetch 10-codes
+function loadTenCodes() {
+  const communityId = dbUser.user?.lastAccessedCommunity.communityID;
+  if (!communityId) {
+    $('#noTenCodes').text('Please join a community to view 10-codes.').show();
+    $('#tenCodesTable').hide();
+    $('#tenCodesPagination').hide();
+    return;
+  }
+  if (!departmentId || departmentId === 'undefined') {
+    $('#noTenCodes').text('Invalid or missing department. Please select a department from the community dashboard.').show();
+    $('#tenCodesTable').hide();
+    $('#tenCodesPagination').hide();
+    return;
+  }
+  if (tenCodesCache.length > 0) {
+    displayTenCodes(tenCodesCache);
+    return;
+  }
+  $.ajax({
+    url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/community/${communityId}`,
+    method: 'GET',
+    success: function(data) {
+      communityData = data;
+      tenCodesCache = data?.community?.tenCodes || [];
+      $('#community-name').text(data?.community?.name)
+      // Build tenCodeMap
+      tenCodeMap = {};
+      tenCodesCache.forEach(tc => {
+        tenCodeMap[tc._id] = tc.code;
+      });
+      filteredTenCodes = tenCodesCache;
+      if (tenCodesCache.length === 0) {
+        $('#noTenCodes').show();
+        $('#tenCodesTable').hide();
+        $('#tenCodesPagination').hide();
+      } else {
+        $('#noTenCodes').hide();
+        $('#tenCodesTable').show();
+        $('#tenCodesPagination').show();
+        displayTenCodes(tenCodesCache);
+      }
+      // Load current status after tenCodesCache is populated
+      loadCurrentStatus();
+    },
+    error: function(xhr) {
+      console.error('Error loading 10-codes:', xhr.responseText);
+      $('#noTenCodes').text('Failed to load 10-codes: ' + (xhr.responseJSON?.message || 'Unknown error')).show();
+      $('#tenCodesTable').hide();
+      $('#tenCodesPagination').hide();
+    }
+  });
+}
+
+// Fetch and display user's current 10-code status
+function loadCurrentStatus() {
+  const userId = dbUser._id;
+  const communityId = dbUser.user?.lastAccessedCommunity.communityID;
+  $.ajax({
+    url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/community/${communityId}`,
+    method: 'GET',
+    success: function(data) {
+      const tenCodeID = data?.community?.members[userId]?.tenCodeID;
+      if (tenCodeID && tenCodeMap[tenCodeID]) {
+        $('#currentStatus').text(`Your Current Status: ${tenCodeMap[tenCodeID]}`);
+        $('#statusSetBy').text(`Set By: ${dbUser.user.username}`);
+      } else {
+        $('#currentStatus').text('Your Current Status: None');
+        $('#statusSetBy').text('Set By: None');
+      }
+    },
+    error: function(xhr) {
+      console.error('Error loading current status:', xhr.responseText);
+      $('#currentStatus').text('Your Current Status: Unknown');
+      $('#statusSetBy').text('Set By: None');
+      alert('Failed to load current status: ' + (xhr.responseJSON?.message || 'Unknown error'));
+    }
+  });
+}
+
+  // Function to display 10-codes with pagination
+function displayTenCodes(codes) {
+  const start = (currentPage - 1) * codesPerPage;
+  const end = start + codesPerPage;
+  const paginatedCodes = codes.slice(start, end);
+
+  $('#tenCodesBody').empty();
+  paginatedCodes.forEach(code => {
+    $('#tenCodesBody').append(
+      `<tr data-ten-code-id="${code._id}" onclick="selectTenCode('${code._id}')">
+        <td>${code.code}</td>
+        <td>${code.description}</td>
+      </tr>`
+    );
+  });
+
+  updatePagination(codes.length);
+}
+
+  // Function to update pagination controls
+  function updatePagination(totalCodes) {
+    const totalPages = Math.ceil(totalCodes / codesPerPage);
+    $('#tenCodesPagination').empty();
+
+    // Previous button
+    $('#tenCodesPagination').append(
+      `<li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+        <a class="page-link" href="#" onclick="changeTenCodesPage(${currentPage - 1})">Previous</a>
+      </li>`
+    );
+
+    // Page numbers
+    for (let i = 1; i <= totalPages; i++) {
+      $('#tenCodesPagination').append(
+        `<li class="page-item ${i === currentPage ? 'active' : ''}">
+          <a class="page-link" href="#" onclick="changeTenCodesPage(${i})">${i}</a>
+        </li>`
+      );
+    }
+
+    // Next button
+    $('#tenCodesPagination').append(
+      `<li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+        <a class="page-link" href="#" onclick="changeTenCodesPage(${currentPage + 1})">Next</a>
+      </li>`
+    );
+  }
+
+  // Function to change page
+  function changeTenCodesPage(page) {
+    if (page < 1 || page > Math.ceil(filteredTenCodes.length / codesPerPage)) return;
+    currentPage = page;
+    displayTenCodes(filteredTenCodes);
+  }
+
+  // Function to filter 10-codes based on search
+  function filterTenCodes(searchTerm) {
+    searchTerm = searchTerm.toLowerCase();
+    filteredTenCodes = tenCodesCache.filter(code =>
+      code.code.toLowerCase().includes(searchTerm) ||
+      code.description.toLowerCase().includes(searchTerm)
+    );
+    currentPage = 1;
+    displayTenCodes(filteredTenCodes);
+  }
+
+    // Polling function to refresh dynamic data
+    function pollDashboardData() {
+      // loadPanicStatuses(); // Coming soon
+      loadActiveBOLOs();
+      loadAssignedCalls();
+      
+    }
+
+    // Update BOLO details via AJAX
+function updateBolo(boloId, boloTitle, location, description) {
+  if (!boloId || !boloTitle || !location || !description) {
+    console.error('Invalid BOLO data:', { boloId, boloTitle, location, description });
+    alert('Please fill all required fields.');
+    return;
+  }
+  $.ajax({
+    url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/bolo/${boloId}`,
+    method: 'PUT',
+    data: JSON.stringify({ title: boloTitle, location, description }),
+    contentType: 'application/json',
+    success: function(res) {
+      $(`#${boloId}-type`).text(boloTitle);
+      $(`#${boloId}-location`).text(location);
+      $(`#${boloId}-description`).text(description);
+      loadActiveBOLOs(); // Refresh BOLO list
+      hideModal('boloDetailModal');
+      alert('BOLO updated successfully.');
+    },
+    error: function(xhr) {
+      console.error('Error updating BOLO:', xhr.responseText);
+      alert('Failed to update BOLO: ' + (xhr.responseJSON?.message || 'Unknown error'));
+      hideModal('boloDetailModal'); // Ensure modal closes on error
+    }
+  });
+}
+
+// Handle update BOLO form submission
+function handleUpdateBolo() {
+  const boloId = document.getElementById('boloIDDetail').value;
+  const boloTitle = document.getElementById('boloTitleDetail').value.trim();
+  const location = document.getElementById('locationDetail').value.trim();
+  const description = document.getElementById('descriptionDetail').value.trim();
+  if (!boloId || !boloTitle || !location || !description) {
+    alert('Please fill all required fields.');
+    return;
+  }
+  updateBolo(boloId, boloTitle, location, description);
+}
+
+// Handle delete BOLO form submission
+function handleDeleteBolo() {
+  const boloId = document.getElementById('boloIDDetail').value;
+  if (!boloId) {
+    console.error('Invalid BOLO ID:', boloId);
+    alert('Invalid BOLO ID.');
+    return;
+  }
+  if (!window.confirm('Are you sure you want to delete this BOLO? This action cannot be undone.')) {
+    return;
+  }
+  deleteBolo(boloId);
+}
+
+    // Delete BOLO via AJAX
+function deleteBolo(boloId) {
+  if (!boloId) {
+    console.error('Invalid BOLO ID:', boloId);
+    alert('Invalid BOLO ID.');
+    return;
+  }
+  $.ajax({
+    url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/bolo/${boloId}`,
+    method: 'DELETE',
+    success: function() {
+      $(`#${boloId}-row`).fadeOut(1, function() { $(this).remove(); });
+      loadActiveBOLOs(); // Refresh BOLO list
+      hideModal('boloDetailModal');
+      alert('BOLO deleted successfully.');
+    },
+    error: function(xhr) {
+      console.error('Error deleting BOLO:', xhr.responseText);
+      alert('Failed to delete BOLO: ' + (xhr.responseJSON?.message || 'Unknown error'));
+      hideModal('boloDetailModal');
+    }
+  });
+}
+
+    // Populate BOLO details in modal
+    function populateBoloDetails(boloId) {
+      $.ajax({
+        url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/bolo/${boloId}`,
+        method: 'GET',
+        success: function(bolo) {
+          $('#boloIDDetail').val(bolo._id);
+          $('#boloTitleDetail').val(bolo?.bolo?.title);
+          $('#locationDetail').val(bolo?.bolo?.location);
+          $('#descriptionDetail').val(bolo?.bolo?.description);
+          // $('#dateCreatedDetail').text(bolo.createdBy || 'Unknown');
+          $('#dateCreatedDetail').text(bolo?.bolo?.createdAt?.toLocaleString() || 'N/A');
+          $('#lastUpdatedDetail').text(bolo?.bolo?.updatedAt?.toLocaleString() || 'N/A');
+          $('#statusDetail').text(bolo?.bolo?.status ? 'Active' : 'Inactive');
+          $('#boloDetailModal').modal('show');
+        },
+        error: function(xhr) {
+          console.error('Error fetching BOLO details:', xhr.responseText);
+          alert('Failed to load BOLO details: ' + (xhr.responseJSON?.message || 'Unknown error'));
+        }
+      });
+    }
+
+    // Populate call details in modal
+function populateCallDetails(callId) {
+  $.ajax({
+    url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/call/${callId}`,
+    method: 'GET',
+    success: function(call) {
+      $('#callIdDetail').val(call._id);
+      $('#createdAtCallDetail').text(call?.call?.createdAt?.toLocaleString() || 'N/A');
+      $('#updatedAtCallDetail').text(call?.call?.updatedAt?.toLocaleString() || 'N/A');
+      $('#callTitleDetail').val(call?.call?.title || '');
+      $('#callDetailsDetail').val(call?.call?.details || '');
+
+      // Format call notes
+      const callNotes = call?.call?.callNotes || [];
+      $('#callNotesDetail').empty();
+      if (callNotes.length > 0) {
+        callNotes.forEach(note => {
+          $('#callNotesDetail').append(
+            `<div class="note-item">
+              <p><strong>Note:</strong> ${note.note || 'N/A'}</p>
+              <p><small><strong>Created By:</strong> ${note.createdBy || 'Unknown'} | 
+              <strong>Created At:</strong> ${note.createdAt ? new Date(note.createdAt).toLocaleString() : 'N/A'}</small></p>
+            </div>`
+          );
+        });
+      } else {
+        $('#callNotesDetail').text('No notes available');
+      }
+
+      // Fetch departments
+      const communityId = dbUser.user?.lastAccessedCommunity.communityID;
+      $.ajax({
+        url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/community/${communityId}/departments`,
+        method: 'GET'
+      }).done(function(data) {
+        const departments = data.departments || [];
+        const departmentIds = call?.call?.departments || [];
+        const departmentNames = departmentIds
+          .map(id => {
+            const dept = departments.find(d => d._id === id);
+            return dept ? dept.name : null;
+          })
+          .filter(name => name);
+        $('#callDepartmentsDetail').empty();
+        if (departmentNames.length > 0) {
+          departmentNames.forEach(name => {
+            $('#callDepartmentsDetail').append(
+              `<span class="badge badge-primary">${name}</span>`
+            );
+          });
+        } else {
+          $('#callDepartmentsDetail').text('None');
+        }
+      }).fail(function(xhr) {
+        console.error('Error fetching departments:', xhr.responseText);
+        $('#callDepartmentsDetail').text('Error loading departments');
+      });
+
+      // Fetch assigned users
+      const userIds = call?.call?.assignedTo || [];
+      if (userIds.length > 0) {
+        const userRequests = userIds.map(userId =>
+          $.ajax({
+            url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/user/${userId}`,
+            method: 'GET'
+          })
+        );
+        $.when.apply($, userRequests).then(function() {
+          const responses = userRequests.length === 1 ? [arguments] : Array.from(arguments);
+          const users = responses.map((response, index) => ({
+            userId: userIds[index],
+            username: response[0]?.user?.username || 'Unknown'
+          }));
+          $('#callAssignedToDetail').empty();
+          const validUsers = users.filter(user => user.username !== 'Unknown');
+          if (validUsers.length > 0) {
+            validUsers.forEach(user => {
+              $('#callAssignedToDetail').append(
+                `<span class="badge badge-primary">${user.username}</span>`
+              );
+            });
+          } else {
+            $('#callAssignedToDetail').text('None');
+          }
+          $('#callDetailModal').modal('show');
+        }, function(xhr) {
+          console.error('Error fetching users:', xhr.responseText);
+          $('#callAssignedToDetail').text('Error loading users');
+          $('#callDetailModal').modal('show');
+        });
+      } else {
+        $('#callAssignedToDetail').text('None');
+        $('#callDetailModal').modal('show');
+      }
+    },
+    error: function(xhr) {
+      console.error('Error fetching call details:', xhr.responseText);
+      alert('Failed to load call details: ' + (xhr.responseJSON?.message || 'Unknown error'));
+    }
+  });
+}
+
+// Update call details via AJAX
+function updateCall(callId, title, details) {
+  if (!callId || !title || !details) {
+    console.error('Invalid call data:', { callId, title, details });
+    alert('Please fill all required fields.');
+    return;
+  }
+  $.ajax({
+    url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/call/${callId}`,
+    method: 'PUT',
+    data: JSON.stringify({ title, details }),
+    contentType: 'application/json',
+    success: function(res) {
+      $(`#${callId}-description`).text(res?.call?.title || title);
+      $(`#${callId}-createdAt`).text(res?.call?.createdAtReadable || 'N/A');
+      loadAssignedCalls();
+      hideModal('callDetailModal');
+      alert('Call updated successfully.');
+    },
+    error: function(xhr) {
+      console.error('Error updating call:', xhr.responseText);
+      alert('Failed to update call: ' + (xhr.responseJSON?.message || 'Unknown error'));
+      hideModal('callDetailModal');
+    }
+  });
+}
+
+// Delete call via AJAX
+function deleteCall(callId) {
+  if (!callId) {
+    console.error('Invalid call ID:', callId);
+    alert('Invalid call ID.');
+    return;
+  }
+  $.ajax({
+    url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/call/${callId}`,
+    method: 'DELETE',
+    success: function() {
+      $(`#${callId}`).fadeOut(1, function() { $(this).remove(); });
+      loadAssignedCalls(); // Refresh call list
+      hideModal('callDetailModal');
+      alert('Call deleted successfully.');
+    },
+    error: function(xhr) {
+      console.error('Error deleting call:', xhr.responseText);
+      alert('Failed to delete call: ' + (xhr.responseJSON?.message || 'Unknown error'));
+      hideModal('callDetailModal');
+    }
+  });
+}
+
+// Handle update call form submission
+function handleUpdateCall() {
+  const callId = document.getElementById('callIdDetail').value;
+  const title = document.getElementById('callTitleDetail').value.trim();
+  const details = document.getElementById('callDetailsDetail').value.trim();
+  if (!callId || !title || !details) {
+    alert('Please fill all required fields.');
+    return;
+  }
+  updateCall(callId, title, details);
+}
+
+// Handle delete call form submission
+function handleDeleteCall() {
+  const callId = document.getElementById('callIdDetail').value;
+  if (!callId) {
+    console.error('Invalid call ID:', callId);
+    alert('Invalid call ID.');
+    return;
+  }
+  if (!window.confirm('Are you sure you want to delete this call? This action cannot be undone.')) {
+    return;
+  }
+  deleteCall(callId);
+}
+
+// Create BOLO via AJAX
+function createBolo(title, location, description, scope, communityID, departmentID, reportedByID) {
+  if (!title || !location || !description || !scope || !communityID || !departmentID || !reportedByID) {
+    console.error('Invalid BOLO data:', { title, location, description, scope, communityID, departmentID, reportedByID });
+    alert('Please fill all required fields.');
+    return;
+  }
+  const payload = {
+    bolo: {
+      title,
+      location,
+      description,
+      communityID,
+      departmentID,
+      scope,
+      reportedByID,
+      status: true
+    }
+  };
+  $.ajax({
+    url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/bolo`,
+    method: 'POST',
+    data: JSON.stringify(payload),
+    contentType: 'application/json',
+    success: function(res) {
+      loadActiveBOLOs(); // Refresh BOLO list
+      hideModal('boloModal');
+      alert('BOLO created successfully.');
+    },
+    error: function(xhr) {
+      console.error('Error creating BOLO:', xhr.responseText);
+      alert('Failed to create BOLO: ' + (xhr.responseJSON?.message || 'Unknown error'));
+      hideModal('boloModal');
+    }
+  });
+}
+
+// Handle create BOLO form submission
+function handleCreateBolo() {
+  const communityId = dbUser.user?.lastAccessedCommunity.communityID;
+      if (!communityId) {
+        alert('Failed to load community, please try refreshing the page and try again.');
+        hideModal('boloModal');
+    return;
+      }
+  const title = document.getElementById('boloTitle').value.trim();
+  const location = document.getElementById('boloLocation').value.trim();
+  const description = document.getElementById('boloDescription').value.trim();
+  const scope = document.querySelector('input[name="scope"]:checked').value;
+  const communityID = document.getElementById('boloCommunityID').value;
+  const departmentID = document.getElementById('boloDepartmentID').value;
+  const reportedByID = document.getElementById('boloReportedByID').value;
+  if (!title || !location || !description || !scope) {
+    alert('Please fill all required fields.');
+    return;
+  }
+  createBolo(title, location, description, scope, communityId, departmentId, dbUser._id);
+}
+
+// Clear BOLO form
+function clearBoloForm() {
+  document.getElementById('boloTitle').value = '';
+  document.getElementById('boloLocation').value = '';
+  document.getElementById('boloDescription').value = '';
+  document.getElementById('scopeCommunity').checked = true;
+  document.getElementById('scopeDepartment').checked = false;
+}
+
+// Toggle caret icon rotation for sidebar collapse
+function toggleCaret(event) {
+  const $link = $(event.currentTarget);
+  const $caret = $link.find('.rotate');
+  const targetId = $link.data('target');
+  const $target = $(targetId);
+  const isExpanded = $target.hasClass('in') || $link.attr('aria-expanded') === 'true';
+  
+  // Toggle expanded class based on current state
+  if (isExpanded) {
+    $caret.removeClass('expanded');
+  } else {
+    $caret.addClass('expanded');
+  }
+}
+
+    // Populate panic details in modal
+    function populatePanicDetails(userId) {
+      $('#panic-id').val(userId);
+    }
+
+    // Handle panic button press
+    function panicButtonPressed() {
+      const userId = dbUser._id;
+      $.ajax({
+        url: `https://police-cad-app-api-bc6d659b60b3.herokuapp.com/api/v1/police/${userId}/panic`,
+        method: 'POST',
+        success: function() {
+          if ($('#panic-button-check-sound').prop('checked')) {
+            var audioElement = document.createElement('audio');
+            audioElement.setAttribute('src', '/static/audio/Police_panic_button_sound_adj.mp3');
+            audioElement.volume = dbUser.user.alertVolumeLevel / 100 || 0.1;
+            audioElement.play();
+          }
+          loadPanicStatuses(); // Refresh panic statuses
+        },
+        error: function(xhr) {
+          console.error('Error triggering panic:', xhr.responseText);
+          alert('Failed to trigger panic: ' + (xhr.responseJSON?.message || 'Unknown error'));
+        }
+      });
+    }
+
+    
+    // Hide modal utility
+function hideModal(modalId) {
+  const $modal = $(`#${modalId}`);
+  $modal.modal('hide');
+  // Ensure body classes are cleaned up
+  $('body').removeClass('modal-open');
+  // Remove all backdrops
+  $('.modal-backdrop').remove();
+  // Reset modal state
+  $modal.removeClass('show').css('display', 'none');
+  // Clear any modal-related data attributes
+  $modal.removeData('bs.modal');
+  // Ensure no lingering modal-open classes
+  $('body').css('padding-right', '');
+}
+
+// Show BOLO modal
+function showBoloModal() {
+  clearBoloForm();
+  $('#boloModal').modal('show');
+}
+
+    // Load 10-codes when modal is shown
+    $('#10codesModal').on('show.bs.modal', function() {
+      loadTenCodes();
+    });
+
+    // Search 10-codes
+    $('#tenCodeSearch').on('input', function() {
+      filterTenCodes($(this).val());
+    });
+  
+
+    // Tail.select initialization
+    document.addEventListener("DOMContentLoaded", function () {
+      tail.select(".select-move", {
+        search: true,
+        descriptions: true,
+        hideSelected: false,
+        hideDisabled: true,
+        multiShowCount: false,
+        multiContainer: true
+      });
+    });
+
+   
+  </script>
+
+<script type="text/javascript">
+  // all global router vars declared here to reduce duplication
+  var dbUser = <%-JSON.stringify(user)%>;
+
+  $.delete=function (url, data, callback, type) {
+    if ($.isFunction(data)) {
+      type=type||callback,
+        callback=data,
+        data={}
+    }
+
+    return $.ajax({
+      url: url,
+      type: 'DELETE',
+      success: callback,
+      data: data,
+      contentType: type
+    });
+  }
+
+  var page = 0;
+  var pageVeh = 0;
+  var pageGun = 0;
+  var pageLicense = 0;
+  var civFirstName = "";
+  var civLastName = "";
+
+  $(document).ready(function () {
+    // Set API URL for shared notepad module
+    if (typeof setApiUrl === 'function') {
+      setApiUrl('<%= apiUrl %>');
+    }
+
+    fetchAndRenderDepartments();
+    $('[title]').tooltip();
+
+    $('#accountUsername').on('keyup', function (e) {
+        if (e.target.value != dbUser.user.username && e.target.value != '') {
+          $('#updateUsernameBtns').show();
+        } else {
+          $('#updateUsernameBtns').hide();
+        }
+      });
+
+      $('#accountCallSign').on('keyup', function (e) {
+        if (e.target.value != dbUser.user.callSign && e.target.value != '') {
+          $('#updateCallSignBtns').show();
+        } else {
+          $('#updateCallSignBtns').hide();
+        }
+      });
+
+      $('#panic-button-check-sound').prop("checked", dbUser.user.panicButtonSound);
+      $('#alert-volume-slider').val(dbUser.user.alertVolumeLevel || 10);
+
+     
+
+      $("#civ-first-name").keydown(function (event) {
+        if (event.keyCode == 32) {
+          event.preventDefault();
+          $('#civ-first-name').popover('show');
+        } else {
+          $('#civ-first-name').popover('hide');
+        }
+      });
+
+      $("#civ-last-name").keydown(function (event) {
+        if (event.keyCode == 32) {
+          event.preventDefault();
+          $('#civ-last-name').popover('show');
+        } else {
+          $('#civ-last-name').popover('hide');
+        }
+      });
+
+      $('#warning-select').change(function () {
+        if ($('#warning-option-other').is(':selected')) {
+          $('#warning-other-div').show();
+        }
+      });
+
+      $('#ticket-select').change(function () {
+        if ($('#ticket-option-other').is(':selected')) {
+          $('#ticket-other-div').show();
+        }
+      });
+
+      $('#warrant-select').change(function () {
+        if ($('#warrant-other-option').is(':selected')) {
+          $('#warrant-other-div').show();
+        }
+      });
+
+      // $('#ticket-select').change(function (e) {
+      //   var selected = $(e.target).val();
+      //   let total = 0;
+      //   selected.forEach(val => {
+      //     let subVal = val.substring(2);
+      //     total += parseInt(subVal);
+      //   });
+      //   $('#amount').val(parseInt(total));
+      // });
+
+      $("#submitTicket").on('click', function () {
+        $('#crimeList').val($("#ticket-select").find("option:selected").text());
+      });
+
+      $("#submitWarning").on('click', function () {
+        $('#warningCrimeList').val($("#warning-select").find("option:selected").text());
+      });
+
+
+
+      // Initialize dashboard data
+      pollDashboardData();
+      setInterval(pollDashboardData, 30000); // Poll every 30 seconds
+      loadTenCodes();
+      filteredTenCodes = tenCodesCache;
+    currentPage = 1;
+    displayTenCodes(filteredTenCodes);
+    // displays the Update Username and Cancel buttons for updating the username
+    $('#accountUsername').on('keyup', function (e) {
+      if (e.target.value!=dbUser.user.username&&e.target.value!='') {
+        $('#updateUsernameBtns').show();
+      } else {
+        $('#updateUsernameBtns').hide();
+      }
+    })
+
+    $('#accountCallSign').on('keyup', function (e) {
+      if (e.target.value!=dbUser.user.callSign&&e.target.value!='') {
+        $('#updateCallSignBtns').show();
+      } else {
+        $('#updateCallSignBtns').hide();
+      }
+    })
+
+    $('#panic-button-check-sound').prop("checked", dbUser.user.panicButtonSound)
+    $('#alert-volume-slider').val(dbUser.user.alertVolumeLevel || 10)
+
+    
+
+    $("#civ-first-name").keydown(function (event) {
+      if (event.keyCode==32) {
+        event.preventDefault();
+        $('#civ-first-name').popover('show')
+      } else {
+        $('#civ-first-name').popover('hide')
+      }
+    });
+
+    $("#civ-last-name").keydown(function (event) {
+      if (event.keyCode==32) {
+        event.preventDefault();
+        $('#civ-last-name').popover('show')
+      } else {
+        $('#civ-last-name').popover('hide')
+      }
+    });
+
+    $('#warning-select').change(function () {
+      if ($('#warning-option-other').is(':selected')) {
+        $('#warning-other-div').show();
+      }
+    })
+
+    $('#ticket-select').change(function () {
+      if ($('#ticket-option-other').is(':selected')) {
+        $('#ticket-other-div').show();
+      }
+    })
+
+    $('#warrant-select').change(function () {
+      if ($('#warrant-other-option').is(':selected')) {
+        $('#warrant-other-div').show();
+      }
+    })
+
+    // $('#ticket-select').change(function (e) {
+    //   var selected=$(e.target).val();
+    //   let total=0
+    //   selected.forEach(val => {
+    //     let subVal=val.substring(2)
+    //     total+=parseInt(subVal)
+    //   })
+    //   $('#amount').val(parseInt(total))
+    // })
+
+    $("#submitTicket").on('click', function () {
+      $('#crimeList').val($("#ticket-select").find("option:selected").text())
+    });
+
+    $("#submitWarning").on('click', function () {
+      $('#warningCrimeList').val($("#warning-select").find("option:selected").text())
+    });
+
+
+    //load gravatar image
+  $('.profile-picture').css("background-image", `url(${dbUser?.user?.profilePicture || 'https://ui-avatars.com/api/?name='+dbUser?.user?.username+'&background=808080&color=fff&size=256'})`)
+
+  }); /* End of document.ready */
+
+  document.addEventListener("DOMContentLoaded", function () {
+    tail.select(".select-move", {
+      search: true,
+      descriptions: true,
+      hideSelected: false,
+      hideDisabled: true,
+      multiShowCount: false,
+      multiContainer: true
+    });
+  });
+
+  window.onload=function () {
+    var socket=io();
+    var myReq={
+      userID: dbUser._id,
+      userUsername: dbUser.user.username,
+      activeCommunity: dbUser.user?.lastAccessedCommunity.communityID
+    }
+    socket.emit('load_panic_statuses', myReq)
+  }
+</script>
+
+<!--  added for google translate -->
+<script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+}
+</script>
