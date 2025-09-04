@@ -1,0 +1,3 @@
+# FastAPI HNP example
+from fastapi import FastAPI, Request, Form
+# ...existing code from original app_fastapi.py...

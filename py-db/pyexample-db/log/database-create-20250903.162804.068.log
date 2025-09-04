@@ -1,0 +1,616 @@
+[2025-09-03 16:28:04] This is codeql database create .\py-db\pyexample-db --language=python --source-root .\data\pyexample
+[2025-09-03 16:28:04] Log file was started late.
+[2025-09-03 16:28:04] [PROGRESS] database create> Initializing database at C:\Users\brook\code\HNPLab\py-db\pyexample-db.
+[2025-09-03 16:28:04] Running plumbing command: codeql database init --language=python --extractor-options-verbosity=1 --qlconfig-file=C:\Users\brook\code\HNPLab\qlconfig.yml --source-root=C:\Users\brook\code\HNPLab\data\pyexample --allow-missing-source-root=false --allow-already-existing -- C:\Users\brook\code\HNPLab\py-db\pyexample-db
+[2025-09-03 16:28:04] Calling plumbing command: codeql resolve languages --extractor-options-verbosity=1 --format=betterjson
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Scanning for [codeql-extractor.yml] from C:\Users\brook\code\codeql\.codeqlmanifest.json
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\actions\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\cpp\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\csharp\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\csv\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\go\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\html\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\java\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\javascript\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\properties\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\python\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\ruby\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\swift\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\xml\codeql-extractor.yml.
+[2025-09-03 16:28:04] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\yaml\codeql-extractor.yml.
+[2025-09-03 16:28:04] Plumbing command codeql resolve languages completed:
+                      {
+                        "aliases" : {
+                          "c" : "cpp",
+                          "c++" : "cpp",
+                          "c-c++" : "cpp",
+                          "c-cpp" : "cpp",
+                          "c#" : "csharp",
+                          "java-kotlin" : "java",
+                          "kotlin" : "java",
+                          "javascript-typescript" : "javascript",
+                          "typescript" : "javascript"
+                        },
+                        "extractors" : {
+                          "actions" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\actions",
+                              "extractor_options" : { }
+                            }
+                          ],
+                          "cpp" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\cpp",
+                              "extractor_options" : {
+                                "scale_timeouts" : {
+                                  "title" : "Value to scale compiler introspection timeouts with",
+                                  "description" : "The extractor attempts to determine what compiler the source code being extracted is compiled with. To this end the extractor makes additional calls to the compiler, some of which are expected to return within a certain fixed time (either 10s or 15s). On some systems that are under high load this time might be too short, and can be scaled up using this option.\n",
+                                  "type" : "string",
+                                  "pattern" : "[0-9]+"
+                                },
+                                "log_verbosity" : {
+                                  "title" : "Verbosity of the extractor logging",
+                                  "description" : "Set the verbosity of the extractor logging to 'quiet' (0), 'normal' (1), 'chatty' (2), or 'noisy' (3). The default is 'normal'.\n",
+                                  "type" : "string",
+                                  "pattern" : "[0-3]"
+                                }
+                              }
+                            }
+                          ],
+                          "csharp" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\csharp",
+                              "extractor_options" : {
+                                "trap" : {
+                                  "title" : "Options pertaining to TRAP.",
+                                  "description" : "Options pertaining to TRAP.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "compression" : {
+                                      "title" : "Controls compression for the TRAP files written by the extractor.",
+                                      "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'brotli' (the default, to write brotli-compressed TRAP), 'gzip', and 'none' (to write uncompressed TRAP).\n",
+                                      "type" : "string",
+                                      "pattern" : "^(none|gzip|brotli)$"
+                                    }
+                                  }
+                                },
+                                "buildless" : {
+                                  "title" : "DEPRECATED - Whether to use buildless (standalone) extraction.",
+                                  "description" : "DEPRECATED: Use `--build-mode none` instead.\nA value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "logging" : {
+                                  "title" : "Options pertaining to logging.",
+                                  "description" : "Options pertaining to logging.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "verbosity" : {
+                                      "title" : "Extractor logging verbosity level.",
+                                      "description" : "Controls the level of verbosity of the extractor. The supported levels are (in order of increasing verbosity):\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                                      "type" : "string",
+                                      "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+                                    }
+                                  }
+                                },
+                                "binlog" : {
+                                  "title" : "Binlog",
+                                  "description" : "[EXPERIMENTAL] The value is a path to the MsBuild binary log file that should be extracted. This option only works when `--build-mode none` is also specified.\n",
+                                  "type" : "array"
+                                }
+                              }
+                            }
+                          ],
+                          "csv" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\csv"
+                            }
+                          ],
+                          "go" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\go",
+                              "extractor_options" : {
+                                "extract_tests" : {
+                                  "title" : "Whether to include Go test files in the CodeQL database.",
+                                  "description" : "A value indicating whether Go test files should be included in the CodeQL database. The default is 'false'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "extract_vendor_dirs" : {
+                                  "title" : "Whether to include Go vendor directories in the CodeQL database.",
+                                  "description" : "A value indicating whether Go vendor directories should be included in the CodeQL database. The default is 'false'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "html" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\html"
+                            }
+                          ],
+                          "java" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\java",
+                              "extractor_options" : {
+                                "exclude" : {
+                                  "title" : "A glob excluding files from analysis.",
+                                  "description" : "A glob indicating what files to exclude from the analysis.\n",
+                                  "type" : "string"
+                                },
+                                "add_prefer_source" : {
+                                  "title" : "Whether to always prefer source files over class files.",
+                                  "description" : "A value indicating whether source files should be preferred over class files. If set to 'true', the extraction adds '-Xprefer:source' to the javac command line. If set to 'false', the extraction uses the default javac behavior ('-Xprefer:newer'). The default is 'true'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "buildless" : {
+                                  "title" : "Whether to use buildless (standalone) extraction (experimental).",
+                                  "description" : "A value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "javascript" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\javascript",
+                              "extractor_options" : {
+                                "skip_types" : {
+                                  "title" : "Skip type extraction for TypeScript",
+                                  "description" : "Whether to skip the extraction of types in a TypeScript application",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "properties" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\properties"
+                            }
+                          ],
+                          "python" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\python",
+                              "extractor_options" : {
+                                "logging" : {
+                                  "title" : "Options pertaining to logging.",
+                                  "description" : "Options pertaining to logging.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "verbosity" : {
+                                      "title" : "Python extractor logging verbosity level.",
+                                      "description" : "Controls the level of verbosity of the CodeQL Python extractor.\nThe supported levels are (in order of increasing verbosity):\n\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                                      "type" : "string",
+                                      "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+                                    }
+                                  }
+                                },
+                                "python_executable_name" : {
+                                  "title" : "Controls the name of the Python executable used by the Python extractor.",
+                                  "description" : "The Python extractor uses platform-dependent heuristics to determine the name of the Python executable to use. Specifying a value for this option overrides the name of the Python executable used by the extractor. Accepted values are py, python and python3. Use this setting with caution, the Python extractor requires Python 3 to run.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(py|python|python3)$"
+                                }
+                              }
+                            }
+                          ],
+                          "ruby" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\ruby",
+                              "extractor_options" : {
+                                "trap" : {
+                                  "title" : "Options pertaining to TRAP.",
+                                  "description" : "Options pertaining to TRAP.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "compression" : {
+                                      "title" : "Controls compression for the TRAP files written by the extractor.",
+                                      "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'gzip' (the default, to write gzip-compressed TRAP) and 'none' (to write uncompressed TRAP).\n",
+                                      "type" : "string",
+                                      "pattern" : "^(none|gzip)$"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "swift" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\swift"
+                            }
+                          ],
+                          "xml" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\xml"
+                            }
+                          ],
+                          "yaml" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\yaml"
+                            }
+                          ]
+                        }
+                      }
+[2025-09-03 16:28:04] [PROGRESS] database init> Calculating baseline information in C:\Users\brook\code\HNPLab\data\pyexample
+[2025-09-03 16:28:04] [SPAMMY] database init> Ignoring the following directories when processing baseline information: .git, .hg, .svn.
+[2025-09-03 16:28:04] [DETAILS] database init> Running command in C:\Users\brook\code\HNPLab\data\pyexample: C:\Users\brook\code\codeql\tools\win64\scc.exe --by-file --exclude-dir .git,.hg,.svn --format json --no-large --no-min .
+[2025-09-03 16:28:04] [SPAMMY] database init> Found 21 baseline files for python.
+[2025-09-03 16:28:04] [PROGRESS] database init> Calculated baseline information for languages: python (78ms).
+[2025-09-03 16:28:04] [PROGRESS] database init> Resolving extractor python.
+[2025-09-03 16:28:04] [DETAILS] database init> Found candidate extractor root for python: C:\Users\brook\code\codeql\python.
+[2025-09-03 16:28:04] [PROGRESS] database init> Successfully loaded extractor Python (python) from C:\Users\brook\code\codeql\python.
+[2025-09-03 16:28:04] [PROGRESS] database init> Created skeleton CodeQL database at C:\Users\brook\code\HNPLab\py-db\pyexample-db. This in-progress database is ready to be populated by an extractor.
+[2025-09-03 16:28:04] Plumbing command codeql database init completed.
+[2025-09-03 16:28:04] [PROGRESS] database create> Running build command: []
+[2025-09-03 16:28:04] Running plumbing command: codeql database trace-command --working-dir=C:\Users\brook\code\HNPLab\data\pyexample --index-traceless-dbs --no-db-cluster -- C:\Users\brook\code\HNPLab\py-db\pyexample-db
+[2025-09-03 16:28:04] Using autobuild script C:\Users\brook\code\codeql\python\tools\autobuild.cmd.
+[2025-09-03 16:28:04] [PROGRESS] database trace-command> Running command in C:\Users\brook\code\HNPLab\data\pyexample: [C:\Users\brook\code\codeql\python\tools\autobuild.cmd]
+[2025-09-03 16:28:05] [build-stdout] Python 3.13.3
+[2025-09-03 16:28:05] [build-stderr] No suitable Python runtime found
+[2025-09-03 16:28:05] [build-stderr] Pass --list (-0) to see all detected environments on your machine
+[2025-09-03 16:28:05] [build-stderr] or set environment variable PYLAUNCHER_ALLOW_INSTALL to use winget
+[2025-09-03 16:28:05] [build-stderr] or open the Microsoft Store to the requested version.
+[2025-09-03 16:28:05] [build-stdout] No directories containing root identifiers were found. Returning working directory as root.
+[2025-09-03 16:28:05] [build-stdout] Will try to guess Python version, as it was not specified in `lgtm.yml`
+[2025-09-03 16:28:05] [build-stdout] Trying to guess Python version based on Trove classifiers in setup.py
+[2025-09-03 16:28:05] [build-stdout] Did not find setup.py (expected it to be at C:\Users\brook\code\HNPLab\data\pyexample\setup.py)
+[2025-09-03 16:28:05] [build-stdout] Trying to guess Python version based on travis file
+[2025-09-03 16:28:05] [build-stdout] Did not find any travis files (expected them at either ['C:\\Users\\brook\\code\\HNPLab\\data\\pyexample\\.travis.yml', 'C:\\Users\\brook\\code\\HNPLab\\data\\pyexample\\travis.yml'])
+[2025-09-03 16:28:05] [build-stdout] Trying to guess Python version based on installed versions
+[2025-09-03 16:28:05] [build-stdout] Wanted to run Python 2, but it is not available. Using Python 3 instead
+[2025-09-03 16:28:05] [build-stdout] This script is running Python 3, but Python 2 is also available (as 'py -3')
+[2025-09-03 16:28:05] [build-stdout] Could not guess Python version, will use default: Python 3
+[2025-09-03 16:28:05] [build-stdout] Calling py -3 -S C:\Users\brook\code\codeql\python\tools\python_tracer.py --verbosity 3 -z all -c C:\Users\brook\code\HNPLab\py-db\pyexample-db\working\trap_cache -R C:\Users\brook\code\HNPLab\data\pyexample
+[2025-09-03 16:28:05] [build-stdout] Python 3.13.3
+[2025-09-03 16:28:05] [build-stdout] INFO: The Python extractor has recently stopped extracting the standard library by default. If you encounter problems, please let us know by submitting an issue to https://github.com/github/codeql. It is possible to re-enable extraction of the standard library by setting the environment variable CODEQL_EXTRACTOR_PYTHON_EXTRACT_STDLIB.
+[2025-09-03 16:28:05] [build-stdout] [INFO] Extraction will use the Python 3 standard library.
+[2025-09-03 16:28:05] [build-stdout] [INFO] sys_path is: ['C:\\Users\\brook\\code\\codeql\\python\\tools', 'C:\\Python313\\python313.zip', 'C:\\Python313\\DLLs', 'C:\\Python313\\Lib', 'C:\\Python313']
+[2025-09-03 16:28:05] [build-stdout] [INFO] Python version 3.13.3
+[2025-09-03 16:28:05] [build-stdout] [INFO] Python extractor version 7.1.2
+[2025-09-03 16:28:06] [build-stdout] [INFO] [1] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\aiosmtplib_async in 2ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [3] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\aiosmtplib_async\app.py in 74ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [3] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\bottle in 2ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [2] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\decorator_chain in 4ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [3] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\decorator_chain\app.py in 53ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [1] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\bottle\app.py in 57ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [1] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\django in 2ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [2] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\django_cbv in 2ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [3] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\django\app.py in 38ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [3] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\falcon in 1ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [3] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\fastapi\app.py in 23ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [2] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\falcon\app.py in 57ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [2] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\flask_decorator in 4ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [1] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\django_cbv\app.py in 60ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [1] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\flask_blueprint in 2ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [9] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\fastapi in 3ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [7] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\flask in 4ms
+[2025-09-03 16:28:06] [build-stdout] [INFO] [3] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\flask_blueprint\app.py in 51ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [3] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\jinja_template in 3ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [9] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\jinja_filetemplate in 2ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [5] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\flask_multiapp in 3ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [6] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\flask\app.py in 51ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [1] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\flask_decorator\app.py in 63ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [1] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\mako_template in 1ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [1] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\param_pollution in 2ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [1] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\pyramid\app.py in 10ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [1] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\pyramid in 2ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [2] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\flask_multiapp\app.py in 78ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [2] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\sanic in 2ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [6] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\starlette_async in 3ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [3] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\mako_template\app.py in 51ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [9] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\jinja_template\app.py in 56ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [9] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\tornado in 2ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [7] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\param_pollution\app.py in 46ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [7] Skipped built-in file C:\Python313\Lib\email\message.py
+[2025-09-03 16:28:07] [build-stdout] [INFO] [7] Extracted folder C:\Python313\Lib\email in 1ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [7] Skipped built-in file C:\Python313\Lib\secrets.py
+[2025-09-03 16:28:07] [build-stdout] [INFO] [7] Skipped built-in file C:\Python313\Lib\email\__init__.py
+[2025-09-03 16:28:07] [build-stdout] [INFO] [7] Skipped built-in file C:\Python313\Lib\smtplib.py
+[2025-09-03 16:28:07] [build-stdout] [INFO] [7] Skipped built-in file C:\Python313\Lib\functools.py
+[2025-09-03 16:28:07] [build-stdout] [INFO] [6] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\tornado\app.py in 17ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [9] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\tornado_async in 1ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [5] Extracted folder C:\Users\brook\code\HNPLab\data\pyexample\web2py in 3ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [7] Skipped built-in file C:\Python313\Lib\os.py
+[2025-09-03 16:28:07] [build-stdout] [INFO] [1] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\sanic\app.py in 66ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [2] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\starlette_async\app.py in 62ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [9] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\web2py\app.py in 45ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [6] Skipped built-in file C:\Python313\Lib\uuid.py
+[2025-09-03 16:28:07] [build-stdout] [INFO] [3] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\tornado_async\app.py in 55ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [7] Skipped built-in file C:\Python313\Lib\asyncio\__init__.py
+[2025-09-03 16:28:07] [build-stdout] [INFO] [5] Extracted folder C:\Python313\Lib\asyncio in 2ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] [4] Extracted file C:\Users\brook\code\HNPLab\data\pyexample\jinja_filetemplate\app.py in 66ms
+[2025-09-03 16:28:07] [build-stdout] [INFO] Processed 52 modules in 1.48s
+[2025-09-03 16:28:07] Plumbing command codeql database trace-command completed.
+[2025-09-03 16:28:07] [PROGRESS] database create> Finalizing database at C:\Users\brook\code\HNPLab\py-db\pyexample-db.
+[2025-09-03 16:28:07] Running plumbing command: codeql database finalize --no-db-cluster -- C:\Users\brook\code\HNPLab\py-db\pyexample-db
+[2025-09-03 16:28:07] Using pre-finalize script C:\Users\brook\code\codeql\python\tools\pre-finalize.cmd.
+[2025-09-03 16:28:07] [PROGRESS] database finalize> Running pre-finalize script C:\Users\brook\code\codeql\python\tools\pre-finalize.cmd in C:\Users\brook\code\HNPLab\data\pyexample.
+[2025-09-03 16:28:07] Running plumbing command: codeql database trace-command --working-dir=C:\Users\brook\code\HNPLab\data\pyexample --no-tracing -- C:\Users\brook\code\HNPLab\py-db\pyexample-db C:\Users\brook\code\codeql\python\tools\pre-finalize.cmd
+[2025-09-03 16:28:07] [PROGRESS] database trace-command> Running command in C:\Users\brook\code\HNPLab\data\pyexample: [C:\Users\brook\code\codeql\python\tools\pre-finalize.cmd]
+[2025-09-03 16:28:08] [build-stderr] Scanning for files in C:\Users\brook\code\HNPLab\data\pyexample...
+[2025-09-03 16:28:08] Plumbing command codeql database trace-command completed.
+[2025-09-03 16:28:08] [PROGRESS] database finalize> Running TRAP import for CodeQL database at C:\Users\brook\code\HNPLab\py-db\pyexample-db...
+[2025-09-03 16:28:08] Running plumbing command: codeql dataset import --dbscheme=C:\Users\brook\code\codeql\python\semmlecode.python.dbscheme -- C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python C:\Users\brook\code\HNPLab\py-db\pyexample-db\trap\python
+[2025-09-03 16:28:08] Clearing disk cache since the version file C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python\default\cache\version does not exist
+[2025-09-03 16:28:08] Tuple pool not found. Clearing relations with cached strings
+[2025-09-03 16:28:08] Trimming disk cache at C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python\default\cache in mode clear.
+[2025-09-03 16:28:08] Sequence stamp origin is -6007923566802747466
+[2025-09-03 16:28:08] Pausing evaluation to hard-clear memory at sequence stamp o+0
+[2025-09-03 16:28:08] Unpausing evaluation
+[2025-09-03 16:28:08] Pausing evaluation to quickly trim disk at sequence stamp o+1
+[2025-09-03 16:28:08] Unpausing evaluation
+[2025-09-03 16:28:08] Pausing evaluation to zealously trim disk at sequence stamp o+2
+[2025-09-03 16:28:08] Unpausing evaluation
+[2025-09-03 16:28:08] Trimming completed (9ms): Purged everything.
+[2025-09-03 16:28:09] Scanning for files in C:\Users\brook\code\HNPLab\py-db\pyexample-db\trap\python
+[2025-09-03 16:28:09] Found 55 TRAP files (746.94 KiB)
+[2025-09-03 16:28:09] [PROGRESS] dataset import> Importing TRAP files
+[2025-09-03 16:28:09] Importing $files.7LP8fgyhi4Dvc7EeePZxlYCD9Gg=.trap.gz (1 of 55)
+[2025-09-03 16:28:09] Importing $files.Q3l3N6tm8Su1-t4aFJF2oz6NRIA=.trap.gz (2 of 55)
+[2025-09-03 16:28:09] Importing $files.QWtRd24enaI5pOPsr-uVufGHQKg=.trap.gz (3 of 55)
+[2025-09-03 16:28:09] Importing $files.l4LmnoFzn7vc8oFgugzfNSLURKk=.trap.gz (4 of 55)
+[2025-09-03 16:28:09] Importing $files.mLoGOqRF2lbmthuCRk33_w7IGRU=.trap.gz (5 of 55)
+[2025-09-03 16:28:09] Importing $files.oNu2ZeX-CsBu9DGGZzrBqDb91GY=.trap.gz (6 of 55)
+[2025-09-03 16:28:09] Importing $files.xrY0u5VOu6CjWxY9Y8Rs31vDbIA=.trap.gz (7 of 55)
+[2025-09-03 16:28:09] Importing $flags.jqtKM-M9r8S1CqJOEsFN9HN0c3Y=.trap.gz (8 of 55)
+[2025-09-03 16:28:09] Importing $interpreter3.ExEs0bSKUwiMp-xKkxFMdW4OlVg=.trap.gz (9 of 55)
+[2025-09-03 16:28:09] Importing $stdlib_33.KECs5GODQ_FBOH7HrBnlCgHcu1c=.trap (10 of 55)
+[2025-09-03 16:28:09] Importing aiosmtplib_async.KsqjG6drHJt4RhugrXSAWc7g2qU=.trap.gz (11 of 55)
+[2025-09-03 16:28:09] Importing app.py.1eJtAHZAY5ySK3o7MOMK9Frmw9s=.trap.gz (12 of 55)
+[2025-09-03 16:28:09] Importing app.py.4TJMhEO7I-oU9iBYagkT3Ft6zog=.trap.gz (13 of 55)
+[2025-09-03 16:28:09] Importing app.py.5XQsZ7dPKon6K5iaLcMrkV_n9-o=.trap.gz (14 of 55)
+[2025-09-03 16:28:09] Importing app.py.6ULR7Y1ptUDK0IPgs1rwyef0DRc=.trap.gz (15 of 55)
+[2025-09-03 16:28:09] Importing app.py.9R8fDkN3ckwNdbBIGIvtjNrENf0=.trap.gz (16 of 55)
+[2025-09-03 16:28:09] Importing app.py.CIhF5F9077BR2YeMB0wDZoW4ChM=.trap.gz (17 of 55)
+[2025-09-03 16:28:09] Importing app.py.D-CLf5g-oqmu7mQ1wYJx242ZiZE=.trap.gz (18 of 55)
+[2025-09-03 16:28:09] Importing app.py.E43X9CVa8nT5QJnuIuneDSrVrgY=.trap.gz (19 of 55)
+[2025-09-03 16:28:09] Importing app.py.GTULOvOOC95bFy0-qvjbFQu4NWk=.trap.gz (20 of 55)
+[2025-09-03 16:28:09] Importing app.py.GetHhLfwCKvmGFFFgP7pHqDBGTU=.trap.gz (21 of 55)
+[2025-09-03 16:28:09] Importing app.py.IJe7jkk-glLDMYwdE_7m1ByC3rk=.trap.gz (22 of 55)
+[2025-09-03 16:28:09] Importing app.py.RZVj7YgCpUFVMLsgs9iY9CtnG6o=.trap.gz (23 of 55)
+[2025-09-03 16:28:09] Importing app.py.UC15e2gW40hhi0x2BTR0VWtxjI0=.trap.gz (24 of 55)
+[2025-09-03 16:28:09] Importing app.py._ACIHEiM7JE3Mu4G0ELje5Q4j50=.trap.gz (25 of 55)
+[2025-09-03 16:28:09] Importing app.py.biFkaW7DpztyXZqm9OJIvI408ag=.trap.gz (26 of 55)
+[2025-09-03 16:28:09] Importing app.py.dQXLszdIRhGcx72FF_1KhDDGrJ0=.trap.gz (27 of 55)
+[2025-09-03 16:28:09] Importing app.py.e3rFjVgtq2a7KMavJjhMugsw784=.trap.gz (28 of 55)
+[2025-09-03 16:28:09] Importing app.py.f1HQyVOU1VVvy4S330k08_dEWFM=.trap.gz (29 of 55)
+[2025-09-03 16:28:09] Importing app.py.noDaOMSYUdK3o4AXGHCk1fV1BxE=.trap.gz (30 of 55)
+[2025-09-03 16:28:09] Importing app.py.qY5FcfxTmHccuZ7BZOmHFhNaUJg=.trap.gz (31 of 55)
+[2025-09-03 16:28:09] Importing app.py.uB1MDJxkkWVfyIJ6FLyJBYXKgKs=.trap.gz (32 of 55)
+[2025-09-03 16:28:09] Importing asyncio.X8Vgoq2OJ3Y5CLG2LDH2LxxCpFk=.trap.gz (33 of 55)
+[2025-09-03 16:28:10] Importing bottle.lOi6x8VD2YxLIYCakxWCBV7W4Qg=.trap.gz (34 of 55)
+[2025-09-03 16:28:10] Importing decorator_chain.7h3jtjjI0mGNySTydFl0Eb8WCBA=.trap.gz (35 of 55)
+[2025-09-03 16:28:10] Importing django.ceAuozCWGN7tWPwY6zaVEDMhpnw=.trap.gz (36 of 55)
+[2025-09-03 16:28:10] Importing django_cbv.kd6U-9BViFP_kenh6rP7cH1nYZE=.trap.gz (37 of 55)
+[2025-09-03 16:28:10] Importing email.CYvaqHao4vmRSjZtjp-hw6kMp50=.trap.gz (38 of 55)
+[2025-09-03 16:28:10] Importing falcon.DpxVlBnGZGGnimcAG4kHOEty_NE=.trap.gz (39 of 55)
+[2025-09-03 16:28:10] Importing fastapi.j2GI2ikEfcPH-h3HIXv8rqmn7v8=.trap.gz (40 of 55)
+[2025-09-03 16:28:10] Importing flask.r8X-turmd0UDx5sBU3y2qzxanjI=.trap.gz (41 of 55)
+[2025-09-03 16:28:10] Importing flask_blueprint.svxb6WGBwUdC7UOrYOQZbBc-eyM=.trap.gz (42 of 55)
+[2025-09-03 16:28:10] Importing flask_decorator.mHlLgNwahVHtVnDVhzh-5Cun0ks=.trap.gz (43 of 55)
+[2025-09-03 16:28:10] Importing flask_multiapp.9Ry_ED5BAFYMaSKs3dbZev2ubNc=.trap.gz (44 of 55)
+[2025-09-03 16:28:10] Importing jinja_filetemplate.BLV6wWkBzq_QrqeSS_C4X5P3AK0=.trap.gz (45 of 55)
+[2025-09-03 16:28:10] Importing jinja_template.uOw1KCdN7uWZCHsmn8gJrvIcVOE=.trap.gz (46 of 55)
+[2025-09-03 16:28:10] Importing mako_template.IFOdwXlSO9fmlCB6dj0zhJYfJ1E=.trap.gz (47 of 55)
+[2025-09-03 16:28:10] Importing metadata.trap.gz (48 of 55)
+[2025-09-03 16:28:10] Importing param_pollution.JfH62TNeA-c6MXvJl4pcESS-gfc=.trap.gz (49 of 55)
+[2025-09-03 16:28:10] Importing pyramid.gruNItAfOTdMjsIq3W_REJu2GJ8=.trap.gz (50 of 55)
+[2025-09-03 16:28:10] Importing sanic.KZZjv5bqkGcYvv2gZ6WjDbiSkXc=.trap.gz (51 of 55)
+[2025-09-03 16:28:10] Importing starlette_async._6h0jGe_yZZ9queeL4KhfWpe7dI=.trap.gz (52 of 55)
+[2025-09-03 16:28:10] Importing tornado.X7olLonlBOFlozZQitGQdXLzuFM=.trap.gz (53 of 55)
+[2025-09-03 16:28:10] Importing tornado_async.0Mk-sdQZb4NfW7CcdGpHZ3VgTPo=.trap.gz (54 of 55)
+[2025-09-03 16:28:10] Importing web2py.-63lScMCaii8RnuoENMGcLE931c=.trap.gz (55 of 55)
+[2025-09-03 16:28:10] [PROGRESS] dataset import> Merging relations
+[2025-09-03 16:28:10] Merging 1 fragment for 'files'.
+[2025-09-03 16:28:10] Merged 68 bytes for 'files'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'folders'.
+[2025-09-03 16:28:10] Merged 90 bytes for 'folders'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'containerparent'.
+[2025-09-03 16:28:10] Merged 117 bytes for 'containerparent'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'py_flags_versioned'.
+[2025-09-03 16:28:10] Merged 184 bytes for 'py_flags_versioned'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'py_cobjects'.
+[2025-09-03 16:28:10] Merged 4755 bytes (4.64 KiB) for 'py_cobjects'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'py_cobjecttypes'.
+[2025-09-03 16:28:10] Merged 5496 bytes (5.37 KiB) for 'py_cobjecttypes'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'py_cobject_sources'.
+[2025-09-03 16:28:10] Merged 6929 bytes (6.77 KiB) for 'py_cobject_sources'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'py_cobjectnames'.
+[2025-09-03 16:28:10] Merged 6304 bytes (6.16 KiB) for 'py_cobjectnames'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'py_cmembers_versioned'.
+[2025-09-03 16:28:10] Merged 6487 bytes (6.33 KiB) for 'py_cmembers_versioned'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'py_special_objects'.
+[2025-09-03 16:28:10] Merged 135 bytes for 'py_special_objects'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'py_citems'.
+[2025-09-03 16:28:10] Merged 545 bytes for 'py_citems'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'ext_rettype'.
+[2025-09-03 16:28:10] Merged 4050 bytes (3.96 KiB) for 'ext_rettype'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'ext_argtype'.
+[2025-09-03 16:28:10] Merged 6815 bytes (6.66 KiB) for 'ext_argtype'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'ext_argreturn'.
+[2025-09-03 16:28:10] Merged 41 bytes for 'ext_argreturn'.
+[2025-09-03 16:28:10] Merging 1 fragment for 'ext_proptype'.
+[2025-09-03 16:28:11] Merged 344 bytes for 'ext_proptype'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_Modules'.
+[2025-09-03 16:28:11] Merged 61 bytes for 'py_Modules'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_module_path'.
+[2025-09-03 16:28:11] Merged 117 bytes for 'py_module_path'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_flow_bb_node'.
+[2025-09-03 16:28:11] Merged 10562 bytes (10.31 KiB) for 'py_flow_bb_node'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_scope_flow'.
+[2025-09-03 16:28:11] Merged 1697 bytes (1.66 KiB) for 'py_scope_flow'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'locations_ast'.
+[2025-09-03 16:28:11] Merged 15909 bytes (15.54 KiB) for 'locations_ast'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'variable'.
+[2025-09-03 16:28:11] Merged 2233 bytes (2.18 KiB) for 'variable'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_extracted_version'.
+[2025-09-03 16:28:11] Merged 49 bytes for 'py_extracted_version'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_stmt_lists'.
+[2025-09-03 16:28:11] Merged 662 bytes for 'py_stmt_lists'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_stmts'.
+[2025-09-03 16:28:11] Merged 2221 bytes (2.17 KiB) for 'py_stmts'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_scopes'.
+[2025-09-03 16:28:11] Merged 4100 bytes (4.00 KiB) for 'py_scopes'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_alias_lists'.
+[2025-09-03 16:28:11] Merged 204 bytes for 'py_alias_lists'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_aliases'.
+[2025-09-03 16:28:11] Merged 435 bytes for 'py_aliases'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_exprs'.
+[2025-09-03 16:28:11] Merged 11644 bytes (11.37 KiB) for 'py_exprs'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_ints'.
+[2025-09-03 16:28:11] Merged 164 bytes for 'py_ints'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_strs'.
+[2025-09-03 16:28:11] Merged 3710 bytes (3.62 KiB) for 'py_strs'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_variables'.
+[2025-09-03 16:28:11] Merged 2830 bytes (2.76 KiB) for 'py_variables'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_expr_contexts'.
+[2025-09-03 16:28:11] Merged 4239 bytes (4.14 KiB) for 'py_expr_contexts'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_bools'.
+[2025-09-03 16:28:11] Merged 133 bytes for 'py_bools'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_expr_lists'.
+[2025-09-03 16:28:11] Merged 2265 bytes (2.21 KiB) for 'py_expr_lists'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_unaryops'.
+[2025-09-03 16:28:11] Merged 49 bytes for 'py_unaryops'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_dict_item_lists'.
+[2025-09-03 16:28:11] Merged 299 bytes for 'py_dict_item_lists'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_dict_items'.
+[2025-09-03 16:28:11] Merged 707 bytes for 'py_dict_items'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_arguments'.
+[2025-09-03 16:28:11] Merged 234 bytes for 'py_arguments'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_Functions'.
+[2025-09-03 16:28:11] Merged 240 bytes for 'py_Functions'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_parameter_lists'.
+[2025-09-03 16:28:11] Merged 201 bytes for 'py_parameter_lists'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_numbers'.
+[2025-09-03 16:28:11] Merged 366 bytes for 'py_numbers'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_cmpop_lists'.
+[2025-09-03 16:28:11] Merged 164 bytes for 'py_cmpop_lists'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_cmpops'.
+[2025-09-03 16:28:11] Merged 227 bytes for 'py_cmpops'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_exports'.
+[2025-09-03 16:28:11] Merged 188 bytes for 'py_exports'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_successors'.
+[2025-09-03 16:28:11] Merged 6339 bytes (6.19 KiB) for 'py_successors'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_idoms'.
+[2025-09-03 16:28:11] Merged 6209 bytes (6.06 KiB) for 'py_idoms'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_ssa_var'.
+[2025-09-03 16:28:11] Merged 1132 bytes (1.11 KiB) for 'py_ssa_var'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_ssa_defn'.
+[2025-09-03 16:28:11] Merged 971 bytes for 'py_ssa_defn'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_ssa_use'.
+[2025-09-03 16:28:11] Merged 1507 bytes (1.47 KiB) for 'py_ssa_use'.
+[2025-09-03 16:28:11] Merging 1 fragment for 'py_true_successors'.
+[2025-09-03 16:28:12] Merged 166 bytes for 'py_true_successors'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_false_successors'.
+[2025-09-03 16:28:12] Merged 167 bytes for 'py_false_successors'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_ssa_phi'.
+[2025-09-03 16:28:12] Merged 112 bytes for 'py_ssa_phi'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_scope_location'.
+[2025-09-03 16:28:12] Merged 364 bytes for 'py_scope_location'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_comments'.
+[2025-09-03 16:28:12] Merged 445 bytes for 'py_comments'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_codelines'.
+[2025-09-03 16:28:12] Merged 242 bytes for 'py_codelines'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_commentlines'.
+[2025-09-03 16:28:12] Merged 221 bytes for 'py_commentlines'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_docstringlines'.
+[2025-09-03 16:28:12] Merged 151 bytes for 'py_docstringlines'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_alllines'.
+[2025-09-03 16:28:12] Merged 242 bytes for 'py_alllines'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'numlines'.
+[2025-09-03 16:28:12] Merged 131 bytes for 'numlines'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_locations'.
+[2025-09-03 16:28:12] Merged 6849 bytes (6.69 KiB) for 'py_locations'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_operators'.
+[2025-09-03 16:28:12] Merged 176 bytes for 'py_operators'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_Classes'.
+[2025-09-03 16:28:12] Merged 53 bytes for 'py_Classes'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'py_boolops'.
+[2025-09-03 16:28:12] Merged 42 bytes for 'py_boolops'.
+[2025-09-03 16:28:12] Merging 1 fragment for 'sourceLocationPrefix'.
+[2025-09-03 16:28:12] Merged 17 bytes for 'sourceLocationPrefix'.
+[2025-09-03 16:28:12] Saving string and id pools to disk.
+[2025-09-03 16:28:12] Finished importing TRAP files.
+[2025-09-03 16:28:12] Read 2.34 MiB of uncompressed TRAP data.
+[2025-09-03 16:28:12] Uncompressed relation data size: 571.35 KiB
+[2025-09-03 16:28:12] Relation data size: 130.67 KiB (merge rate: 69.59 KiB/s)
+[2025-09-03 16:28:12] String pool size: 2.08 MiB
+[2025-09-03 16:28:12] ID pool size: 1.09 MiB
+[2025-09-03 16:28:12] [PROGRESS] dataset import> Finished writing database (relations: 130.67 KiB; string pool: 2.08 MiB).
+[2025-09-03 16:28:12] Pausing evaluation to close the cache at sequence stamp o+131
+[2025-09-03 16:28:12] The disk cache is freshly trimmed; leave it be.
+[2025-09-03 16:28:12] Unpausing evaluation
+[2025-09-03 16:28:12] [WARN] Failed to delete C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python\default\strings\0 (attempt 1)
+                             java.nio.file.FileSystemException: C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python\default\strings\0: The process cannot access the file because it is being used by another process
+                             	at java.base/sun.nio.fs.WindowsException.translateToIOException(Unknown Source)
+                             	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(Unknown Source)
+                             	at java.base/sun.nio.fs.WindowsException.rethrowAsIOException(Unknown Source)
+                             	at java.base/sun.nio.fs.WindowsFileSystemProvider.implDelete(Unknown Source)
+                             	at java.base/sun.nio.fs.AbstractFileSystemProvider.delete(Unknown Source)
+                             	at java.base/java.nio.file.Files.delete(Unknown Source)
+                             	at com.semmle.util.files.FileUtil8.delete(FileUtil8.java:361)
+                             	at com.semmle.util.files.FileUtil8.deleteIfExists(FileUtil8.java:394)
+                             	at com.semmle.util.files.FileUtil8.lambda$deleteWithRetries$10(FileUtil8.java:628)
+                             	at com.semmle.util.files.FileUtil8.performWithRetries(FileUtil8.java:559)
+                             	at com.semmle.util.files.FileUtil8.deleteWithRetries(FileUtil8.java:627)
+                             	at com.semmle.inmemory.util.DiskPool.deleteFiles(DiskPool.java:244)
+                             	at com.semmle.inmemory.util.SequentialDiskPool.deleteFiles(SequentialDiskPool.java:15)
+                             	at com.semmle.inmemory.stringpool.IntensionalGeneration.deleteFiles(IntensionalGeneration.java:81)
+                             	at com.semmle.inmemory.stringpool.StringPool.closePool(StringPool.java:662)
+                             	at com.semmle.inmemory.MemoryBackend.close(MemoryBackend.java:183)
+                             	at com.semmle.inmemory.trap.TrapImporter.close(TrapImporter.java:348)
+                             	at com.semmle.cli2.ql.dataset.ImportCommand.executeSubcommand(ImportCommand.java:174)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.lambda$executeSubcommandWithMessages$5(SubcommandCommon.java:892)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.withCompilationMessages(SubcommandCommon.java:444)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.executeSubcommandWithMessages(SubcommandCommon.java:890)
+                             	at com.semmle.cli2.picocli.PlumbingRunner.run(PlumbingRunner.java:119)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.runPlumbingInProcess(SubcommandCommon.java:201)
+                             	at com.semmle.cli2.database.FinalizeCommand.doTrapImport(FinalizeCommand.java:254)
+                             	at com.semmle.cli2.database.FinalizeCommand.finalizeOne(FinalizeCommand.java:185)
+                             	at com.semmle.cli2.database.FinalizeCommand.executeSubcommand(FinalizeCommand.java:115)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.lambda$executeSubcommandWithMessages$5(SubcommandCommon.java:892)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.withCompilationMessages(SubcommandCommon.java:444)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.executeSubcommandWithMessages(SubcommandCommon.java:890)
+                             	at com.semmle.cli2.picocli.PlumbingRunner.run(PlumbingRunner.java:119)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.runPlumbingInProcess(SubcommandCommon.java:201)
+                             	at com.semmle.cli2.database.CreateCommand.executeSubcommand(CreateCommand.java:204)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.lambda$executeSubcommandWithMessages$5(SubcommandCommon.java:892)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.withCompilationMessages(SubcommandCommon.java:444)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.executeSubcommandWithMessages(SubcommandCommon.java:890)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.toplevelMain(SubcommandCommon.java:777)
+                             	at com.semmle.cli2.picocli.SubcommandCommon.call(SubcommandCommon.java:757)
+                             	at com.semmle.cli2.picocli.SubcommandMaker.runMain(SubcommandMaker.java:238)
+                             	at com.semmle.cli2.picocli.SubcommandMaker.runMain(SubcommandMaker.java:259)
+                             	at com.semmle.cli2.CodeQL.main(CodeQL.java:115)
+[2025-09-03 16:28:13] Plumbing command codeql dataset import completed.
+[2025-09-03 16:28:13] [PROGRESS] database finalize> TRAP import complete (4.9s).
+[2025-09-03 16:28:13] Running plumbing command: codeql database cleanup -- C:\Users\brook\code\HNPLab\py-db\pyexample-db
+[2025-09-03 16:28:13] [PROGRESS] database cleanup> Cleaning up existing TRAP files after import...
+[2025-09-03 16:28:13] [PROGRESS] database cleanup> TRAP files cleaned up (10ms).
+[2025-09-03 16:28:13] [PROGRESS] database cleanup> Cleaning up scratch directory...
+[2025-09-03 16:28:13] [PROGRESS] database cleanup> Scratch directory cleaned up (9ms).
+[2025-09-03 16:28:13] Running plumbing command: codeql dataset cleanup -- C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python
+[2025-09-03 16:28:13] [PROGRESS] dataset cleanup> Cleaning up dataset in C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python.
+[2025-09-03 16:28:13] Trimming disk cache at C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python\default\cache in mode trim.
+[2025-09-03 16:28:13] Sequence stamp origin is -6007923545769733413
+[2025-09-03 16:28:13] Pausing evaluation to quickly trim memory at sequence stamp o+0
+[2025-09-03 16:28:13] Unpausing evaluation
+[2025-09-03 16:28:13] Pausing evaluation to zealously trim disk at sequence stamp o+1
+[2025-09-03 16:28:13] Unpausing evaluation
+[2025-09-03 16:28:13] Trimming completed (3ms): Trimmed disposable data from cache.
+[2025-09-03 16:28:13] Pausing evaluation to close the cache at sequence stamp o+2
+[2025-09-03 16:28:13] The disk cache is freshly trimmed; leave it be.
+[2025-09-03 16:28:13] Unpausing evaluation
+[2025-09-03 16:28:13] [PROGRESS] dataset cleanup> Trimmed disposable data from cache.
+[2025-09-03 16:28:13] [PROGRESS] dataset cleanup> Finalizing dataset in C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python
+[2025-09-03 16:28:13] [DETAILS] dataset cleanup> Finished deleting ID pool from C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python (3ms).
+[2025-09-03 16:28:13] Plumbing command codeql dataset cleanup completed.
+[2025-09-03 16:28:13] Plumbing command codeql database cleanup completed with status 0.
+[2025-09-03 16:28:13] [PROGRESS] database finalize> Finished zipping source archive (18.22 KiB).
+[2025-09-03 16:28:13] Plumbing command codeql database finalize completed.
+[2025-09-03 16:28:13] [PROGRESS] database create> Successfully created database at C:\Users\brook\code\HNPLab\py-db\pyexample-db.
+[2025-09-03 16:28:13] Terminating normally.

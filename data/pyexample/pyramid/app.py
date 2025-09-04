@@ -1,0 +1,3 @@
+# Pyramid HNP example
+from pyramid.config import Configurator
+# ...existing code from original app_pyramid.py...

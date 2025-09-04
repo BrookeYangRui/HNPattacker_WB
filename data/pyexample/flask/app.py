@@ -1,0 +1,3 @@
+# Flask HNP example
+from flask import (Blueprint, render_template, redirect, request, url_for)
+# ...existing code from original pyexample.py...
