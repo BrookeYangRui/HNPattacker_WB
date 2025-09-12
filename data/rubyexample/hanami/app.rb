@@ -15,6 +15,25 @@ RESET_TEMPLATE = "<p>Reset your password: <a href='%s'>%s</a></p>"
 class HnpAction
   include Hanami::Action
   
+  # Hanami-like URL helpers
+  def default_url_options
+    Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+  end
+  
+  def routes
+    @routes ||= OpenStruct.new(
+      url: ->(path, options = {}) {
+        scheme = ENV['APP_SCHEME'] || 'https'
+        host = options[:host] || default_url_options[:host]
+        "#{scheme}://#{host}#{path}"
+      }
+    )
+  end
+  
+  def reset_password_url(token)
+    routes.url("/reset/#{token}")
+  end
+  
   def call(params)
     # SOURCE: extract host from request headers
     host = request.host
@@ -33,6 +52,9 @@ class HnpAction
     session[:user_agent] = request.env["HTTP_USER_AGENT"]
     session[:request_time] = Time.now.to_i
     session[:hanami_framework] = true
+    
+    # Simulate Hanami's default_url_options being influenced by headers
+    Thread.current[:default_url_options] = { host: host }
   end
 end
 
@@ -60,8 +82,8 @@ class ForgotSubmitAction < HnpAction
     email = params[:email] || 'user@example.com'
     token = 'hanami-token-123'
     
-    # ADDITION: build reset URL with Hanami framework context
-    reset_url = "http://#{@polluted_host}/reset/#{token}"
+    # ADDITION: build reset URL using Hanami helper (realistic pattern)
+    reset_url = reset_password_url(token)
     reset_url += "?from=hanami_framework&t=#{token}"
     reset_url += "&framework=hanami&polluted_host=#{@polluted_host}"
     reset_url += "&user_agent=#{@user_agent}"

@@ -9,6 +9,19 @@ require 'json'
 
 RESET_TEMPLATE = "<p>Reset your password: <a href='%s'>%s</a></p>"
 
+# Sinatra helpers to simulate Rails-like URL generation
+helpers do
+  def default_url_options
+    Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+  end
+
+  def reset_password_url(token)
+    scheme = ENV['APP_SCHEME'] || 'https'
+    host = default_url_options[:host]
+    "#{scheme}://#{host}/reset/#{token}"
+  end
+end
+
 # Rack middleware for host extraction
 class HostExtractionMiddleware
   def initialize(app)
@@ -26,6 +39,8 @@ class HostExtractionMiddleware
     env["extracted_host"] = host
     env["rack.session"] ||= {}
     env["rack.session"]["extracted_host"] = host
+    # Also pollute thread-local default_url_options to affect helpers
+    Thread.current[:default_url_options] = { host: host }
     
     @app.call(env)
   end
@@ -87,9 +102,11 @@ post '/forgot' do
   if forwarded_host = request.env["HTTP_X_FORWARDED_HOST"]
     host = forwarded_host
   end
-  
-  # ADDITION: build reset URL with middleware context
-  reset_url = "http://#{host}/reset/#{token}"
+  # Ensure helpers read polluted host
+  Thread.current[:default_url_options] = { host: host }
+
+  # ADDITION: build reset URL via helper (realistic)
+  reset_url = reset_password_url(token)
   reset_url += "?from=rack_middleware&t=#{token}"
   
   # Add session context if available

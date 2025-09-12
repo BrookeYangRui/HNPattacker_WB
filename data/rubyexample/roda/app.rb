@@ -17,6 +17,21 @@ class RodaHnpApp < Roda
   # Roda middleware for HNP
   plugin :hooks
   
+  # Roda-like URL helpers
+  def default_url_options
+    Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+  end
+  
+  def url_for(path, options = {})
+    scheme = ENV['APP_SCHEME'] || 'https'
+    host = options[:host] || default_url_options[:host]
+    "#{scheme}://#{host}#{path}"
+  end
+  
+  def reset_password_url(token)
+    url_for("/reset/#{token}")
+  end
+  
   before do
     # SOURCE: extract host from request headers
     host = request.host
@@ -35,6 +50,9 @@ class RodaHnpApp < Roda
     session[:user_agent] = request.env["HTTP_USER_AGENT"]
     session[:request_time] = Time.now.to_i
     session[:roda_framework] = true
+    
+    # Simulate Roda's default_url_options being influenced by headers
+    Thread.current[:default_url_options] = { host: host }
   end
   
   # Forgot password form
@@ -53,8 +71,8 @@ class RodaHnpApp < Roda
         email = r.params["email"] || "user@example.com"
         token = "roda-token-123"
         
-        # ADDITION: build reset URL with Roda framework context
-        reset_url = "http://#{@polluted_host}/reset/#{token}"
+        # ADDITION: build reset URL using Roda helper (realistic pattern)
+        reset_url = reset_password_url(token)
         reset_url += "?from=roda_framework&t=#{token}"
         reset_url += "&framework=roda&polluted_host=#{@polluted_host}"
         reset_url += "&user_agent=#{@user_agent}"

@@ -15,6 +15,23 @@ class GrapeAPI < Grape::API
   version 'v1', using: :header, vendor: 'hnp'
   format :json
   
+  # Grape-like URL helpers
+  helpers do
+    def default_url_options
+      Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+    end
+    
+    def url_for(path, options = {})
+      scheme = ENV['APP_SCHEME'] || 'https'
+      host = options[:host] || default_url_options[:host]
+      "#{scheme}://#{host}#{path}"
+    end
+    
+    def reset_password_url(token)
+      url_for("/reset/#{token}")
+    end
+  end
+  
   # Grape-like middleware for HNP
   before do
     # SOURCE: extract host from request headers
@@ -28,6 +45,8 @@ class GrapeAPI < Grape::API
     env['grape.user_agent'] = request.env["HTTP_USER_AGENT"]
     env['grape.request_time'] = Time.now.to_i
     env['grape.framework'] = 'grape'
+    # Simulate Grape's default_url_options being influenced by headers
+    Thread.current[:default_url_options] = { host: host }
   end
   
   resource :forgot do
@@ -55,8 +74,8 @@ class GrapeAPI < Grape::API
       user_agent = env['grape.user_agent']
       request_time = env['grape.request_time']
       
-      # ADDITION: build reset URL with Grape API context
-      reset_url = "http://#{polluted_host}/reset/#{token}"
+      # ADDITION: build reset URL using Grape helper (realistic pattern)
+      reset_url = reset_password_url(token)
       reset_url += "?from=grape_api&t=#{token}"
       reset_url += "&framework=grape&polluted_host=#{polluted_host}"
       reset_url += "&user_agent=#{user_agent}"
@@ -146,6 +165,19 @@ end
 class GrapeHnpApp < Sinatra::Base
   set :port, 3000
   
+  # Grape-like URL helpers for Sinatra routes
+  helpers do
+    def default_url_options
+      Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+    end
+    
+    def reset_password_url(token)
+      scheme = ENV['APP_SCHEME'] || 'https'
+      host = default_url_options[:host]
+      "#{scheme}://#{host}/reset/#{token}"
+    end
+  end
+  
   # Mount Grape-like API
   mount GrapeAPI
   
@@ -176,8 +208,11 @@ class GrapeHnpApp < Sinatra::Base
     env['grape.request_time'] = Time.now.to_i
     env['grape.framework'] = 'grape'
     
-    # ADDITION: build reset URL with Grape-like context
-    reset_url = "http://#{host}/reset/#{token}"
+    # Ensure helper reads polluted host
+    Thread.current[:default_url_options] = { host: host }
+    
+    # ADDITION: build reset URL using Grape helper (realistic pattern)
+    reset_url = reset_password_url(token)
     reset_url += "?from=grape_api&t=#{token}"
     reset_url += "&framework=grape&polluted_host=#{host}"
     reset_url += "&user_agent=#{request.env["HTTP_USER_AGENT"]}"

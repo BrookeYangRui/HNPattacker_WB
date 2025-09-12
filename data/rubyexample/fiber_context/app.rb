@@ -14,6 +14,20 @@ RESET_TEMPLATE = "<p>Reset your password: <a href='%s'>%s</a></p>"
 $fiber_context_store = {}
 $thread_local_store = {}
 
+# Rails/Devise-like URL options and helpers
+helpers do
+  def default_url_options
+    # Prefer thread-local options (simulating Rails' ActionMailer::Base.default_url_options)
+    Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+  end
+
+  def reset_password_url(token)
+    host = default_url_options[:host]
+    scheme = ENV['APP_SCHEME'] || 'https'
+    "#{scheme}://#{host}/reset/#{token}"
+  end
+end
+
 # Fiber context pollution middleware
 class FiberContextMiddleware
   def initialize(app)
@@ -39,6 +53,8 @@ class FiberContextMiddleware
     Thread.current[:polluted_host] = host
     Thread.current[:polluted_time] = Time.now.to_i
     Thread.current[:polluted_user_agent] = env["HTTP_USER_AGENT"]
+    # Simulate Rails' default_url_options being polluted by request headers
+    Thread.current[:default_url_options] = { host: host }
     
     # Store in environment for later use
     env["fiber_context"] = $fiber_context_store[current_fiber]
@@ -111,18 +127,13 @@ post '/forgot' do
   email = params[:email] || 'user@example.com'
   token = 'fiber-token-123'
   
-  # Get polluted host from various contexts
+  # Get polluted context for demonstration
   current_fiber = Fiber.current
   fiber_context = $fiber_context_store[current_fiber]
   thread_host = Thread.current[:polluted_host]
-  
-  host = fiber_context&.dig('polluted_host') || thread_host || request.host
-  if forwarded_host = request.env["HTTP_X_FORWARDED_HOST"]
-    host = forwarded_host
-  end
-  
-  # ADDITION: build reset URL with Fiber context pollution
-  reset_url = "http://#{host}/reset/#{token}"
+
+  # Build URL using realistic helper that reads thread-local default_url_options
+  reset_url = reset_password_url(token)
   reset_url += "?from=fiber_context&t=#{token}"
   
   # Add context pollution indicators

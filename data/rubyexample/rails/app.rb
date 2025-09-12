@@ -10,6 +10,17 @@ require 'securerandom'
 
 RESET_TEMPLATE = "<p>Reset your password: <a href='%s'>%s</a></p>"
 
+# Rails-like URL helpers available to controller/actions
+def default_url_options
+  Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+end
+
+def reset_password_url(token)
+  scheme = ENV['APP_SCHEME'] || 'https'
+  host = default_url_options[:host]
+  "#{scheme}://#{host}/reset/#{token}"
+end
+
 # Rails-like controller structure
 class RailsController
   attr_accessor :request, :response, :session, :params
@@ -32,6 +43,8 @@ class RailsController
     @session[:user_agent] = @request.env["HTTP_USER_AGENT"]
     @session[:request_time] = Time.now.to_i
     @session[:rails_framework] = true
+    # Simulate Rails' default_url_options being influenced by headers
+    Thread.current[:default_url_options] = { host: host }
   end
   
   def forgot_form
@@ -56,8 +69,8 @@ class RailsController
     user_agent = @session[:user_agent]
     request_time = @session[:request_time]
     
-    # ADDITION: build reset URL with Rails framework context
-    reset_url = "http://#{polluted_host}/reset/#{token}"
+    # ADDITION: build reset URL via helper (realistic Rails/Devise pattern)
+    reset_url = reset_password_url(token)
     reset_url += "?from=rails_framework&t=#{token}"
     reset_url += "&framework=rails&polluted_host=#{polluted_host}"
     reset_url += "&user_agent=#{user_agent}"

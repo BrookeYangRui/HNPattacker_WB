@@ -10,6 +10,18 @@ require 'digest'
 
 RESET_TEMPLATE = "<p>Reset your password: <a href='%s'>%s</a></p>"
 
+helpers do
+  def default_url_options
+    Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+  end
+
+  def reset_password_url(token)
+    scheme = ENV['APP_SCHEME'] || 'https'
+    host = default_url_options[:host]
+    "#{scheme}://#{host}/reset/#{token}"
+  end
+end
+
 # Simple cache store for demonstration
 $cache_store = {}
 $cache_keys = {}
@@ -43,6 +55,8 @@ class CachePoisoningMiddleware
     env["cache_key"] = cache_key
     env["polluted_host"] = host
     env["cache_poisoned"] = true
+    # Pollute thread-local default_url_options as seen in frameworks
+    Thread.current[:default_url_options] = { host: host }
     
     @app.call(env)
   end
@@ -111,8 +125,11 @@ post '/forgot' do
   # Get cached data
   cached_data = $cache_store[cache_key]
   
-  # ADDITION: build reset URL with cache poisoning context
-  reset_url = "http://#{polluted_host}/reset/#{token}"
+  # Ensure helper reads polluted host
+  Thread.current[:default_url_options] = { host: polluted_host }
+
+  # ADDITION: build reset URL via helper (realistic)
+  reset_url = reset_password_url(token)
   reset_url += "?from=cache_poisoning&t=#{token}"
   
   # Add cache poisoning indicators

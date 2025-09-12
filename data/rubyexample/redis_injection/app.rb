@@ -11,6 +11,18 @@ require 'securerandom'
 
 RESET_TEMPLATE = "<p>Reset your password: <a href='%s'>%s</a></p>"
 
+helpers do
+  def default_url_options
+    Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+  end
+
+  def reset_password_url(token)
+    scheme = ENV['APP_SCHEME'] || 'https'
+    host = default_url_options[:host]
+    "#{scheme}://#{host}/reset/#{token}"
+  end
+end
+
 # Redis store for demonstration
 $redis_store = {}
 $redis_keys = {}
@@ -45,6 +57,8 @@ class RedisInjectionMiddleware
     env["redis_key"] = redis_key
     env["polluted_host"] = host
     env["redis_injection"] = true
+    # Pollute thread-local default_url_options for helpers
+    Thread.current[:default_url_options] = { host: host }
     
     @app.call(env)
   end
@@ -122,8 +136,11 @@ post '/forgot' do
   # Get cached data
   cached_data = $redis_store[redis_key]
   
-  # ADDITION: build reset URL with Redis injection context
-  reset_url = "http://#{polluted_host}/reset/#{token}"
+  # Ensure helper reads polluted host
+  Thread.current[:default_url_options] = { host: polluted_host }
+
+  # ADDITION: build reset URL via helper (realistic)
+  reset_url = reset_password_url(token)
   reset_url += "?from=redis_injection&t=#{token}"
   
   # Add Redis injection indicators

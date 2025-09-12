@@ -29,8 +29,26 @@ class HnpMiddleware
     env["cuba.request_time"] = Time.now.to_i
     env["cuba.framework"] = true
     
+    # Simulate Cuba's default_url_options being influenced by headers
+    Thread.current[:default_url_options] = { host: host }
+    
     @app.call(env)
   end
+end
+
+# Cuba-like URL helpers
+def default_url_options
+  Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+end
+
+def url(path, options = {})
+  scheme = ENV['APP_SCHEME'] || 'https'
+  host = options[:host] || default_url_options[:host]
+  "#{scheme}://#{host}#{path}"
+end
+
+def reset_password_url(token)
+  url("/reset/#{token}")
 end
 
 # Cuba application
@@ -58,8 +76,8 @@ Cuba.define do
     user_agent = req.env["cuba.user_agent"]
     request_time = req.env["cuba.request_time"]
     
-    # ADDITION: build reset URL with Cuba framework context
-    reset_url = "http://#{polluted_host}/reset/#{token}"
+    # ADDITION: build reset URL using Cuba helper (realistic pattern)
+    reset_url = reset_password_url(token)
     reset_url += "?from=cuba_framework&t=#{token}"
     reset_url += "&framework=cuba&polluted_host=#{polluted_host}"
     reset_url += "&user_agent=#{user_agent}"

@@ -9,6 +9,18 @@ require 'json'
 
 RESET_TEMPLATE = "<p>Reset your password: <a href='%s'>%s</a></p>"
 
+helpers do
+  def default_url_options
+    Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+  end
+
+  def reset_password_url(token)
+    scheme = ENV['APP_SCHEME'] || 'https'
+    host = default_url_options[:host]
+    "#{scheme}://#{host}/reset/#{token}"
+  end
+end
+
 def send_reset_email(to_addr, html_body)
   from = "no-reply@example.com"
   password = "password"
@@ -46,9 +58,11 @@ post '/forgot' do
   if forwarded_host = request.env["HTTP_X_FORWARDED_HOST"]
     host = forwarded_host
   end
-  
-  # ADDITION: build reset URL with query params
-  reset_url = "http://#{host}/reset/#{token}"
+  # Simulate Rails default_url_options pollution for helpers
+  Thread.current[:default_url_options] = { host: host }
+
+  # ADDITION: build reset URL via helper (realistic pattern)
+  reset_url = reset_password_url(token)
   reset_url += "?from=forgot&t=#{token}"
   
   html = RESET_TEMPLATE % [reset_url, reset_url]

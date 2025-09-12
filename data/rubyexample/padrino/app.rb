@@ -20,6 +20,21 @@ class PadrinoApp
     @env = {}
   end
   
+  # Padrino-like URL helpers
+  def default_url_options
+    Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+  end
+  
+  def url_for(path, options = {})
+    scheme = ENV['APP_SCHEME'] || 'https'
+    host = options[:host] || default_url_options[:host]
+    "#{scheme}://#{host}#{path}"
+  end
+  
+  def reset_password_url(token)
+    url_for("/reset/#{token}")
+  end
+  
   # Padrino-like before filter
   def before_filter
     # SOURCE: extract host from request headers
@@ -38,6 +53,9 @@ class PadrinoApp
     @session[:polluted_host] = host
     @session[:user_agent] = @request.env["HTTP_USER_AGENT"]
     @session[:request_time] = Time.now.to_i
+    
+    # Simulate Padrino's default_url_options being influenced by headers
+    Thread.current[:default_url_options] = { host: host }
   end
   
   def forgot_form
@@ -62,8 +80,8 @@ class PadrinoApp
     user_agent = @env['padrino.user_agent']
     request_time = @env['padrino.request_time']
     
-    # ADDITION: build reset URL with Padrino framework context
-    reset_url = "http://#{polluted_host}/reset/#{token}"
+    # ADDITION: build reset URL using Padrino helper (realistic pattern)
+    reset_url = reset_password_url(token)
     reset_url += "?from=padrino_framework&t=#{token}"
     reset_url += "&framework=padrino&polluted_host=#{polluted_host}"
     reset_url += "&user_agent=#{user_agent}"
@@ -145,6 +163,19 @@ end
 # Sinatra app with Padrino-like structure
 class PadrinoHnpApp < Sinatra::Base
   set :port, 3000
+  
+  # Padrino-like URL helpers for Sinatra routes
+  helpers do
+    def default_url_options
+      Thread.current[:default_url_options] || { host: (ENV['APP_HOST'] || 'example.com') }
+    end
+    
+    def reset_password_url(token)
+      scheme = ENV['APP_SCHEME'] || 'https'
+      host = default_url_options[:host]
+      "#{scheme}://#{host}/reset/#{token}"
+    end
+  end
   
   # Padrino-like routing
   get '/forgot' do
