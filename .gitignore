@@ -4,13 +4,40 @@ js-db/
 ruby-db/
 java-db/
 
+# CodeQL query results
+*.sarif
+*.bqrs
+*.txt
+
+# Maven
+apache-maven-*/
+maven.zip
+target/
+*.jar
+*.war
+*.ear
+*.class
+
 # Local tools & outputs
 bfg.jar
 replacements.txt
 results.bqrs
+sources.txt
 
-# OS / editor
+# IDE and editor files
 .DS_Store
 Thumbs.db
 .vscode/
 .idea/
+*.iml
+*.ipr
+*.iws
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+*.tmp
+*.temp
+*~

@@ -1,1 +1,0 @@
-{"languages":{"java":{"displayName":"Java/Kotlin","files":["session_fixation/app.java","struts/app.java","wicket/app.java","thread_local/app.java","spring_security/app.java","play/app.java","jakarta/app.java","jwt_bypass/app.java","spring/app.java","vaadin/app.java","oauth_bypass/app.java","struts2/app.java"],"linesOfCode":1704,"name":"java"}}}

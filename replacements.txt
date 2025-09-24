@@ -1,1 +1,0 @@
-﻿regex::sk_test_[0-9a-zA-Z]+
