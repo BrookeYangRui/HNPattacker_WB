@@ -1,1 +1,0 @@
-{"languages":{"javascript":{"displayName":"JavaScript/TypeScript","files":["express/app.js","hapi/app.js","fastify/app.js","async_context/app.js","restify/app.js","nestjs/app.js","proxy_bypass/app.js","mongodb_injection/app.js","koa/app.js","koa2/app.js","helmet_bypass/app.js","graphql_injection/app.js"],"linesOfCode":1857,"name":"javascript"}}}
