@@ -1,0 +1,16 @@
+# CodeQL databases and caches
+py-db/
+js-db/
+ruby-db/
+java-db/
+
+# Local tools & outputs
+bfg.jar
+replacements.txt
+results.bqrs
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

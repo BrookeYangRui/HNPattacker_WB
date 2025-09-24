@@ -4,8 +4,21 @@ HTTP Request Header Pollution (HNP) vulnerability detection for Python applicati
 
 ## Quick Start
 
+Repository: `https://github.com/BrookeYangRui/HNPattacker_WB`
+
 ```bash
+# 1) 安装 CodeQL CLI 并确保已创建 Python 数据库 py-db/pyexample-db
+# 2) 安装查询依赖（一次性）
+codeql pack install
+
+# 3) 运行综合查询并输出分类结果
 python run_analysis.py
+```
+
+Run the query directly (optional):
+```bash
+codeql query run hnp_comprehensive.ql --database ..\py-db\pyexample-db --output results.bqrs
+codeql bqrs decode results.bqrs --format=text | more
 ```
 
 ## Files
