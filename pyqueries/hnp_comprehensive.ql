@@ -344,4 +344,4 @@ module HNPComprehensiveFlow = TaintTracking::Global<HNPComprehensiveConfiguratio
 
 from DataFlow::Node source, DataFlow::Node sink
 where HNPComprehensiveFlow::flow(source, sink)
-select sink, "HNP Vulnerability: request-controlled host data flows into a sensitive sink at {0}", sink
+select source, "HNP Vulnerability: Request parameter flows to sensitive sink {1}", sink, sink.toString()
