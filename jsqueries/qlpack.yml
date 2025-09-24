@@ -1,4 +1,5 @@
-name: jsqueries
-version: 0.0.1
+name: js-hnp-queries
+version: 1.0.0
+description: "Comprehensive JavaScript/Node.js HNP vulnerability detection queries"
 dependencies:
   codeql/javascript-all: "*"

@@ -1,0 +1,34 @@
+{
+    "name": "hnplab/php-hnp-analyzer",
+    "description": "PHP Host Name Pollution Static Analysis Tool",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "HNP Lab",
+            "email": "contact@hnplab.org"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "nikic/php-parser": "^4.15",
+        "symfony/console": "^5.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "HnpLab\\PhpHnpAnalyzer\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "HnpLab\\PhpHnpAnalyzer\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "analyze": "php bin/analyzer.php",
+        "test": "phpunit"
+    }
+}

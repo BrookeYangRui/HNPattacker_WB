@@ -1,10 +1,12 @@
 ---
-sourceLocationPrefix: C:\Users\brook\code\HNPattacker_WB\jsexample
-baselineLinesOfCode: 110
+sourceLocationPrefix: C:\Users\brook\code\HNPLab\data\jsexample
+baselineLinesOfCode: 1857
 unicodeNewlines: true
 columnKind: utf16
 primaryLanguage: javascript
 creationMetadata:
-  cliVersion: 2.20.4
-  creationTime: 2025-08-05T16:13:24.036317900Z
+  cliVersion: 2.23.0
+  creationTime: 2025-09-23T22:35:48.269792400Z
+overlayBaseDatabase: false
+overlayDatabase: false
 finalised: true

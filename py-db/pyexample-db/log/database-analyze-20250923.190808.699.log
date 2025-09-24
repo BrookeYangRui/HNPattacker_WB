@@ -1,0 +1,325 @@
+[2025-09-23 19:08:08] This is codeql database analyze ..\py-db\pyexample-db --format=sarif-latest --output=test-results.sarif
+[2025-09-23 19:08:08] Log file was started late.
+[2025-09-23 19:08:08] [PROGRESS] database analyze> Running queries.
+[2025-09-23 19:08:08] Running plumbing command: codeql database run-queries --evaluator-log-level=5 --warnings=show --qlconfig-file=C:\Users\brook\code\HNPLab\pyqueries\qlconfig.yml --dynamic-join-order-mode=none --no-rerun -- C:\Users\brook\code\HNPLab\py-db\pyexample-db
+[2025-09-23 19:08:08] Calling plumbing command: codeql resolve languages --format=betterjson
+[2025-09-23 19:08:08] [DETAILS] resolve languages> Scanning for [codeql-extractor.yml] from C:\Users\brook\code\codeql\.codeqlmanifest.json
+[2025-09-23 19:08:08] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\actions\codeql-extractor.yml.
+[2025-09-23 19:08:08] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\cpp\codeql-extractor.yml.
+[2025-09-23 19:08:08] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\csharp\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\csv\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\go\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\html\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\java\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\javascript\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\properties\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\python\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\ruby\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\rust\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\swift\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\xml\codeql-extractor.yml.
+[2025-09-23 19:08:09] [DETAILS] resolve languages> Parsing C:\Users\brook\code\codeql\yaml\codeql-extractor.yml.
+[2025-09-23 19:08:09] Plumbing command codeql resolve languages completed:
+                      {
+                        "aliases" : {
+                          "c" : "cpp",
+                          "c++" : "cpp",
+                          "c-c++" : "cpp",
+                          "c-cpp" : "cpp",
+                          "c#" : "csharp",
+                          "java-kotlin" : "java",
+                          "kotlin" : "java",
+                          "javascript-typescript" : "javascript",
+                          "typescript" : "javascript"
+                        },
+                        "extractors" : {
+                          "actions" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\actions",
+                              "extractor_options" : { }
+                            }
+                          ],
+                          "cpp" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\cpp",
+                              "extractor_options" : {
+                                "scale_timeouts" : {
+                                  "title" : "Value to scale compiler introspection timeouts with",
+                                  "description" : "The extractor attempts to determine what compiler the source code being extracted is compiled with. To this end the extractor makes additional calls to the compiler, some of which are expected to return within a certain fixed time (either 10s or 15s). On some systems that are under high load this time might be too short, and can be scaled up using this option.\n",
+                                  "type" : "string",
+                                  "pattern" : "[0-9]+"
+                                },
+                                "log_verbosity" : {
+                                  "title" : "Verbosity of the extractor logging",
+                                  "description" : "Set the verbosity of the extractor logging to 'quiet' (0), 'normal' (1), 'chatty' (2), or 'noisy' (3). The default is 'normal'.\n",
+                                  "type" : "string",
+                                  "pattern" : "[0-3]"
+                                }
+                              }
+                            }
+                          ],
+                          "csharp" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\csharp",
+                              "extractor_options" : {
+                                "trap" : {
+                                  "title" : "Options pertaining to TRAP.",
+                                  "description" : "Options pertaining to TRAP.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "compression" : {
+                                      "title" : "Controls compression for the TRAP files written by the extractor.",
+                                      "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'brotli' (the default, to write brotli-compressed TRAP), 'gzip', and 'none' (to write uncompressed TRAP).\n",
+                                      "type" : "string",
+                                      "pattern" : "^(none|gzip|brotli)$"
+                                    }
+                                  }
+                                },
+                                "buildless" : {
+                                  "title" : "DEPRECATED - Whether to use buildless (standalone) extraction.",
+                                  "description" : "DEPRECATED: Use `--build-mode none` instead.\nA value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "logging" : {
+                                  "title" : "Options pertaining to logging.",
+                                  "description" : "Options pertaining to logging.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "verbosity" : {
+                                      "title" : "Extractor logging verbosity level.",
+                                      "description" : "Controls the level of verbosity of the extractor. The supported levels are (in order of increasing verbosity):\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                                      "type" : "string",
+                                      "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+                                    }
+                                  }
+                                },
+                                "binlog" : {
+                                  "title" : "Binlog",
+                                  "description" : "[EXPERIMENTAL] The value is a path to the MsBuild binary log file that should be extracted. This option only works when `--build-mode none` is also specified.\n",
+                                  "type" : "array"
+                                }
+                              }
+                            }
+                          ],
+                          "csv" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\csv"
+                            }
+                          ],
+                          "go" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\go",
+                              "extractor_options" : {
+                                "extract_tests" : {
+                                  "title" : "Whether to include Go test files in the CodeQL database.",
+                                  "description" : "A value indicating whether Go test files should be included in the CodeQL database. The default is 'false'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "extract_vendor_dirs" : {
+                                  "title" : "Whether to include Go vendor directories in the CodeQL database.",
+                                  "description" : "A value indicating whether Go vendor directories should be included in the CodeQL database. The default is 'false'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "html" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\html"
+                            }
+                          ],
+                          "java" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\java",
+                              "extractor_options" : {
+                                "exclude" : {
+                                  "title" : "A glob excluding files from analysis.",
+                                  "description" : "A glob indicating what files to exclude from the analysis. This accepts glob patterns that are supported by Java's 'getPathMatcher' implementation.\n",
+                                  "type" : "string"
+                                },
+                                "add_prefer_source" : {
+                                  "title" : "Whether to always prefer source files over class files.",
+                                  "description" : "A value indicating whether source files should be preferred over class files. If set to 'true', the extraction adds '-Xprefer:source' to the javac command line. If set to 'false', the extraction uses the default javac behavior ('-Xprefer:newer'). The default is 'true'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "buildless" : {
+                                  "title" : "Whether to use buildless (standalone) extraction (experimental).",
+                                  "description" : "A value indicating, which type of extraction the autobuilder should perform. If 'true', then the standalone extractor will be used, otherwise tracing extraction will be performed. The default is 'false'. Note that buildless extraction will generally yield less accurate analysis results, and should only be used in cases where it is not possible to build the code (for example if it uses inaccessible dependencies).\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                },
+                                "buildless_dependency_dir" : {
+                                  "title" : "The path where buildless (standalone) extraction should keep dependencies.",
+                                  "description" : "If set, the buildless (standalone) extractor will store dependencies in this directory.\n",
+                                  "type" : "string"
+                                },
+                                "minimize_dependency_jars" : {
+                                  "title" : "Whether to rewrite and minimize downloaded JAR dependencies (experimental).",
+                                  "description" : "If 'true', JAR dependencies downloaded during extraction will be rewritten to remove unneeded data, such as method bodies. The default is 'false'.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "javascript" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\javascript",
+                              "extractor_options" : {
+                                "skip_types" : {
+                                  "title" : "Skip type extraction for TypeScript",
+                                  "description" : "Whether to skip the extraction of types in a TypeScript application",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "properties" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\properties"
+                            }
+                          ],
+                          "python" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\python",
+                              "extractor_options" : {
+                                "logging" : {
+                                  "title" : "Options pertaining to logging.",
+                                  "description" : "Options pertaining to logging.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "verbosity" : {
+                                      "title" : "Python extractor logging verbosity level.",
+                                      "description" : "Controls the level of verbosity of the CodeQL Python extractor.\nThe supported levels are (in order of increasing verbosity):\n\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                                      "type" : "string",
+                                      "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+                                    }
+                                  }
+                                },
+                                "python_executable_name" : {
+                                  "title" : "Controls the name of the Python executable used by the Python extractor.",
+                                  "description" : "The Python extractor uses platform-dependent heuristics to determine the name of the Python executable to use. Specifying a value for this option overrides the name of the Python executable used by the extractor. Accepted values are py, python and python3. Use this setting with caution, the Python extractor requires Python 3 to run.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(py|python|python3)$"
+                                }
+                              }
+                            }
+                          ],
+                          "ruby" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\ruby",
+                              "extractor_options" : {
+                                "trap" : {
+                                  "title" : "Options pertaining to TRAP.",
+                                  "description" : "Options pertaining to TRAP.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "compression" : {
+                                      "title" : "Controls compression for the TRAP files written by the extractor.",
+                                      "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'gzip' (the default, to write gzip-compressed TRAP) 'zstd' (to write Zstandard-compressed TRAP) and 'none' (to write uncompressed TRAP).\n",
+                                      "type" : "string",
+                                      "pattern" : "^(none|gzip|zstd)$"
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          ],
+                          "rust" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\rust",
+                              "extractor_options" : {
+                                "trap" : {
+                                  "title" : "Options pertaining to TRAP.",
+                                  "description" : "Options pertaining to TRAP.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "compression" : {
+                                      "title" : "Controls compression for the TRAP files written by the extractor.",
+                                      "description" : "This option is only intended for use in debugging the extractor. Accepted values are 'gzip' (to write gzip-compressed TRAP) 'zstd' (to write Zstandard-compressed TRAP) and 'none' (the default, to write uncompressed TRAP).\n",
+                                      "type" : "string",
+                                      "pattern" : "^(none|gzip|zstd)$"
+                                    }
+                                  }
+                                },
+                                "cargo_target_dir" : {
+                                  "title" : "Directory to use for cargo output files.",
+                                  "description" : "This value is an optional path to use as `CARGO_TARGET_DIR` for the internal cargo commands the extractor uses. Pointing it to a persistent directory may reduce execution time of consecutive extractor runs. By default, a new scratch directory is used for each run.\n",
+                                  "type" : "string"
+                                },
+                                "cargo_target" : {
+                                  "title" : "Target architecture",
+                                  "description" : "Target architecture to use for analysis, analogous to `cargo --target`. By default the host architecture is used.\n",
+                                  "type" : "string"
+                                },
+                                "cargo_features" : {
+                                  "title" : "Cargo features to turn on",
+                                  "description" : "Comma-separated list of features to turn on. By default all features are enabled. If any features are specified, then only those features are enabled. The `default` feature must be explicitly specified if only default features are desired. Can be repeated.\n",
+                                  "type" : "array"
+                                },
+                                "cargo_cfg_overrides" : {
+                                  "title" : "Cargo cfg overrides",
+                                  "description" : "Comma-separated list of cfg settings to enable, or disable if prefixed with `-`. Can be repeated.\n",
+                                  "type" : "array"
+                                },
+                                "logging" : {
+                                  "title" : "Options pertaining to logging.",
+                                  "description" : "Options pertaining to logging.",
+                                  "type" : "object",
+                                  "properties" : {
+                                    "verbosity" : {
+                                      "title" : "Extractor logging verbosity level.",
+                                      "description" : "Controls the level of verbosity of the extractor. The supported levels are (in order of increasing verbosity):\n  - off\n  - errors\n  - warnings\n  - info or progress\n  - debug or progress+\n  - trace or progress++\n  - progress+++\n",
+                                      "type" : "string",
+                                      "pattern" : "^(off|errors|warnings|(info|progress)|(debug|progress\\+)|(trace|progress\\+\\+)|progress\\+\\+\\+)$"
+                                    },
+                                    "flamegraph" : {
+                                      "title" : "[Experimental] File path for write flame graph log",
+                                      "description" : "Collect flame graph data using the `tracing-flame` crate. To render a flame graph or chart, run the `inferno-flamegraph` command. See also: https://crates.io/crates/tracing-flame\n",
+                                      "type" : "string"
+                                    }
+                                  }
+                                },
+                                "extract_dependencies_as_source" : {
+                                  "title" : "Extract dependencies as source code",
+                                  "description" : "Extract the full source code of dependencies instead of only extracting signatures.\n",
+                                  "type" : "string",
+                                  "pattern" : "^(false|true)$"
+                                }
+                              }
+                            }
+                          ],
+                          "swift" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\swift"
+                            }
+                          ],
+                          "xml" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\xml"
+                            }
+                          ],
+                          "yaml" : [
+                            {
+                              "extractor_root" : "C:\\Users\\brook\\code\\codeql\\yaml"
+                            }
+                          ]
+                        }
+                      }
+[2025-09-23 19:08:09] Calling plumbing command: codeql resolve ram --dataset=C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python --format=json
+[2025-09-23 19:08:09] [PROGRESS] resolve ram> Stringpool size measured as 2179482
+[2025-09-23 19:08:09] Plumbing command codeql resolve ram completed:
+                      [
+                        "-J-Xmx3389M",
+                        "--off-heap-ram=3865"
+                      ]
+[2025-09-23 19:08:09] Spawning plumbing command: execute queries -J-Xmx3389M --off-heap-ram=3865 --verbosity=progress --logdir=C:\Users\brook\code\HNPLab\py-db\pyexample-db\log --evaluator-log-level=5 --warnings=show --qlconfig-file=C:\Users\brook\code\HNPLab\pyqueries\qlconfig.yml --dynamic-join-order-mode=none --no-rerun --output=C:\Users\brook\code\HNPLab\py-db\pyexample-db\results -- C:\Users\brook\code\HNPLab\py-db\pyexample-db\db-python codeql/python-queries
+[2025-09-23 19:08:26] [ERROR] Spawned process exited abnormally (code 2; tried to run: [C:\Users\brook\code\codeql\tools\win64\java\bin\java.exe, -Xmx3389M, "-Djava.library.path=C:\Users\brook\code\codeql\tools\win64\java\bin;C:\WINDOWS\Sun\Java\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\Program Files\Common Files\Oracle\Java\javapath;c:\Users\brook\AppData\Local\Programs\cursor\resources\app\bin;C:\Python313\Scripts\;C:\Python313\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\dotnet\;C:\Program Files\Git\cmd;C:\ProgramData\chocolatey\bin;C:\Program Files\Docker\Docker\resources\bin;C:\Users\brook\AppData\Local\nvm;C:\nvm4w\nodejs;C:\Users\brook\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\brook\AppData\Local\Programs\Python\Python310\;C:\Users\brook\AppData\Local\Microsoft\WindowsApps;C:\Users\brook\AppData\Roaming\npm;C:\Users\brook\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\brook\AppData\Local\nvm;C:\nvm4w\nodejs;c:\Users\brook\AppData\Local\Programs\cursor\resources\app\bin;C:\php-7.4;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Tesseract-OCR;C:\Users\brook\AppData\Roaming\Python\Python313\Scripts;C:\Users\brook\code\codeql;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X64\;C:\Program Files (x86)\Pulse Secure\VC142.CRT\X86\;C:\Program Files (x86)\Common Files\Pulse Secure\TNC Client Plugin\;C:\Program Files (x86)\Common Files\Pulse Secure\VC142.CRT\X64\;C:\Program Files (x86)\Common Files\Pulse Secure\VC142.CRT\X86\;C:\Program Files\NVIDIA Corporation\NVIDIA App\NvDLISR;C:\Users\brook\AppData\Local\Programs\Python\Python310\Scripts\;C:\Users\brook\AppData\Local\Programs\Python\Python310\;C:\Users\brook\AppData\Local\Microsoft\WindowsApps;C:\Users\brook\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\brook\AppData\Roaming\npm;C:\Users\brook\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\brook\AppData\Local\nvm;C:\nvm4w\nodejs;C:\Users\brook\AppData\Roaming\Composer\vendor\bin;c:\Users\brook\.cursor\extensions\ms-python.debugpy-2025.10.0-win32-x64\bundled\scripts\noConfigScripts;.", -cp, C:\Users\brook\code\codeql\tools\codeql.jar, com.semmle.cli2.CodeQL, env_argv, execute, queries, -J-Xmx3389M, _, _, _, _, _, _, _, --no-rerun, _, --, _, codeql/python-queries])
+[2025-09-23 19:08:26] Plumbing command codeql execute queries terminated with status 2.
+[2025-09-23 19:08:26] Plumbing command codeql database run-queries completed with status 2.
+[2025-09-23 19:08:26] Exiting with code 2

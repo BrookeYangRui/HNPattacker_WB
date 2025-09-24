@@ -1,0 +1,4 @@
+name: ruby-hnp-queries
+version: 1.0.0
+dependencies:
+  codeql/ruby-all: "*"

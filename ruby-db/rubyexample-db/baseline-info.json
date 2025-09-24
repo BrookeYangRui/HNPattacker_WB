@@ -1,0 +1,1 @@
+{"languages":{"ruby":{"displayName":"Ruby","files":["sinatra/app.rb","grape/app.rb","cache_poisoning/app.rb","elasticsearch_injection/app.rb","rails/app.rb","hanami/app.rb","fiber_context/app.rb","cuba/app.rb","padrino/app.rb","roda/app.rb","rack_middleware/app.rb","redis_injection/app.rb"],"linesOfCode":1873,"name":"ruby"}}}

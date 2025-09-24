@@ -1,0 +1,45 @@
+---
+sourceLocationPrefix: C:\Users\brook\code\HNPLab\data\javaexample
+baselineLinesOfCode: 1704
+unicodeNewlines: false
+columnKind: utf16
+primaryLanguage: java
+inProgress:
+  primaryLanguage: java
+  installedExtractors:
+    actions:
+     - C:/Users/brook/code/codeql/actions
+    cpp:
+     - C:/Users/brook/code/codeql/cpp
+    csharp:
+     - C:/Users/brook/code/codeql/csharp
+    csv:
+     - C:/Users/brook/code/codeql/csv
+    go:
+     - C:/Users/brook/code/codeql/go
+    html:
+     - C:/Users/brook/code/codeql/html
+    java:
+     - C:/Users/brook/code/codeql/java
+    javascript:
+     - C:/Users/brook/code/codeql/javascript
+    properties:
+     - C:/Users/brook/code/codeql/properties
+    python:
+     - C:/Users/brook/code/codeql/python
+    ruby:
+     - C:/Users/brook/code/codeql/ruby
+    rust:
+     - C:/Users/brook/code/codeql/rust
+    swift:
+     - C:/Users/brook/code/codeql/swift
+    xml:
+     - C:/Users/brook/code/codeql/xml
+    yaml:
+     - C:/Users/brook/code/codeql/yaml
+creationMetadata:
+  cliVersion: 2.23.0
+  creationTime: 2025-09-23T21:10:25.565523700Z
+overlayBaseDatabase: false
+overlayDatabase: false
+finalised: false
